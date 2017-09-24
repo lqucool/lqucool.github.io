@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -62,20 +62,23 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="http://owsesa4hj.bkt.clouddn.com/favicon.png?v=5.1.2" />
 
 
 
 
 
 
+<meta name="description" content="一个看不懂代码的码农">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Qu&#39;s Blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="Qu&#39;s Blog">
+<meta property="og:description" content="一个看不懂代码的码农">
 <meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Qu&#39;s Blog">
+<meta name="twitter:description" content="一个看不懂代码的码农">
 
 
 
@@ -83,7 +86,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.2',
     sidebar: {"position":"left","display":"always","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -219,12 +222,223 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/hello/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qu.L">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://owsesa4hj.bkt.clouddn.com/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qu's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/24/hello/" itemprop="url">Quad Copter</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T22:32:43+08:00">
+                2017-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/quad-copter/" itemprop="url" rel="index">
+                    <span itemprop="name">quad copter</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="this-is-a-test"><a href="#this-is-a-test" class="headerlink" title="this is a test"></a>this is a test</h2><pre><code>#ifndef __ekf_h
+#define __ekf_h
+
+#include &quot;matrix.h&quot;
+#include &quot;inverse.h&quot;
+
+using namespace matrix;
+template &lt;int M, int N&gt;
+class ekf
+{
+
+  protected:
+    Matrix&lt;float, M, M&gt; P;
+    Matrix&lt;float, M, M&gt; Q;
+    Matrix&lt;float, N, N&gt; R;
+    Matrix&lt;float, M, M&gt; I;
+    Matrix&lt;float, M, M&gt; F;
+    Matrix&lt;float, N, M&gt; H;
+
+    Matrix&lt;float, M, 1&gt; X;
+    Matrix&lt;float, N, 1&gt; Z;
+
+  private:
+    Matrix&lt;float, N, 1&gt; Y;
+    Matrix&lt;float, N, N&gt; S;
+    Matrix&lt;float, N, N&gt; S_inv;
+    Matrix&lt;float, M, N&gt; K;
+
+  public:
+    void set_P(int m, int n, float value) { P(m, n) = value; }
+    void set_Q(int m, int n, float value) { Q(m, n) = value; }
+    void set_R(int m, int n, float value) { R(m, n) = value; }
+    void set_I(int m, int n, float value) { I(m, n) = value; }
+    void set_F(int m, int n, float value) { F(m, n) = value; }
+    void set_H(int m, int n, float value) { H(m, n) = value; }
+    void set_X(int m, int n, float value) { X(m, n) = value; }
+    void set_Z(int m, int n, float value) { Z(m, n) = value; }
+
+    void get_X(int m, int n) { return X(m, n); }
+
+    void predict();
+    void correct();
+};
+
+template &lt;int M, int N&gt;
+void ekf&lt;M, N&gt;::predict()
+{
+
+    X = F * X;
+
+    P = F * P * F.transpose() + Q;
+}
+
+template &lt;int M, int N&gt;
+void ekf&lt;M, N&gt;::correct()
+{
+
+    Y = Z - H * X;
+
+    S = H * P * H.transpose() + R;
+
+//    &amp;S_inv = inverse&lt;n&gt;(&amp;S);
+
+    K = P * H.transpose() * S_inv;
+
+    X = X + (K * Y);
+}
+
+
+#endif
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu.L">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://owsesa4hj.bkt.clouddn.com/touxiang.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -368,8 +582,12 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
+            <img class="site-author-image" itemprop="image"
+              src="http://owsesa4hj.bkt.clouddn.com/touxiang.jpg"
+              alt="Qu.L" />
+          
             <p class="site-author-name" itemprop="name">Qu.L</p>
-            <p class="site-description motion-element" itemprop="description"></p>
+            <p class="site-description motion-element" itemprop="description">一个看不懂代码的码农</p>
         </div>
 
         <nav class="site-state motion-element">
@@ -379,14 +597,32 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
           
 
           
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
 
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
           
 
         </nav>
@@ -434,12 +670,6 @@
   
 </div>
 
-
-  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-  <span class="post-meta-divider">|</span>
-
-  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.2</div>
 
 
         
