@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="quad," />
+  <meta name="keywords" content="quadcopter," />
 
 
 
@@ -69,18 +69,18 @@
 
 
 
-<meta name="description" content="this is a test#ifndef __ekf_h #define __ekf_h  #include &amp;quot;matrix.h&amp;quot; #include &amp;quot;inverse.h&amp;quot;  using namespace matrix; template &amp;lt;int M, int N&amp;gt; class ekf {    protected:     Matrix&amp;">
-<meta name="keywords" content="quad">
+<meta name="description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
+<meta name="keywords" content="quadcopter">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Quad Copter">
+<meta property="og:title" content="高度融合">
 <meta property="og:url" content="http://yoursite.com/2017/09/24/hello/index.html">
 <meta property="og:site_name" content="Qu&#39;s Blog">
-<meta property="og:description" content="this is a test#ifndef __ekf_h #define __ekf_h  #include &amp;quot;matrix.h&amp;quot; #include &amp;quot;inverse.h&amp;quot;  using namespace matrix; template &amp;lt;int M, int N&amp;gt; class ekf {    protected:     Matrix&amp;">
+<meta property="og:description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-24T15:57:50.480Z">
+<meta property="og:updated_time" content="2017-10-08T14:42:31.270Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Quad Copter">
-<meta name="twitter:description" content="this is a test#ifndef __ekf_h #define __ekf_h  #include &amp;quot;matrix.h&amp;quot; #include &amp;quot;inverse.h&amp;quot;  using namespace matrix; template &amp;lt;int M, int N&amp;gt; class ekf {    protected:     Matrix&amp;">
+<meta name="twitter:title" content="高度融合">
+<meta name="twitter:description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
 
 
 
@@ -116,7 +116,7 @@
 
 
 
-  <title>Quad Copter | Qu's Blog</title>
+  <title>高度融合 | Qu's Blog</title>
   
 
 
@@ -240,7 +240,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Quad Copter</h1>
+          <h1 class="post-title" itemprop="name headline">高度融合</h1>
         
 
         <div class="post-meta">
@@ -275,8 +275,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/quad-copter/" itemprop="url" rel="index">
-                    <span itemprop="name">quad copter</span>
+                  <a href="/categories/quadcopter/" itemprop="url" rel="index">
+                    <span itemprop="name">quadcopter</span>
                   </a>
                 </span>
 
@@ -312,7 +312,17 @@
       
 
       
-        <h2 id="this-is-a-test"><a href="#this-is-a-test" class="headerlink" title="this is a test"></a>this is a test</h2><pre><code>#ifndef __ekf_h
+        <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
+<p>在进行数据融合之前，先看下能得到高度信息的传感器都有哪些：</p>
+<p>1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可以接受，可以控制在5-10cm左右，但是长时间，比如静止放置十分钟或者更久，就会产生比较大的漂移，一般都会漂出去半米远，所以只用气压计融合加计并不能做出一个特别好的定高效果。</p>
+<p>2.加计，加计的数据要是姿态解算之后的数据，也就是大地坐标系下z轴加速度计数据，</p>
+</blockquote>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><blockquote>
+<p>1.互补滤波，应该是比较简单的一种算法。把气压计得出的高度数据微分得出速度，加计积分也得出速度，之后相互融合。</p>
+<p>2.ekf，也就是扩展卡尔曼了，不过由于高度的状态方程是线性的，所以kf和ekf也就差别不大，ekf的算法关键的就是状态转移方程的建立了，不同的状态方程最后得出的效果也会略有区别，当然调参的小技巧可能也会不大一样，不过重点都是Q,R的参数调试。</p>
+<p>3.还有一种处理方式就是px4中最开始使用的一种算法，其实也是预测-校验的一种思路，只不过比ekf要简单一些。</p>
+</blockquote>
+<pre><code>#ifndef __ekf_h
 #define __ekf_h
 
 #include &quot;matrix.h&quot;
@@ -399,7 +409,7 @@ void ekf&lt;M, N&gt;::correct()
       
         <div class="post-tags">
           
-            <a href="/tags/quad/" rel="tag"># quad</a>
+            <a href="/tags/quadcopter/" rel="tag"># quadcopter</a>
           
         </div>
       
@@ -541,7 +551,7 @@ void ekf&lt;M, N&gt;::correct()
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#this-is-a-test"><span class="nav-number">1.</span> <span class="nav-text">this is a test</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a></li></ol></div>
             
 
           </div>
