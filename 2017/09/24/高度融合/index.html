@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="quadcopter," />
 
 
 
@@ -69,13 +69,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Qu&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
+<meta name="keywords" content="quadcopter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高度融合">
+<meta property="og:url" content="http://yoursite.com/2017/09/24/高度融合/index.html">
 <meta property="og:site_name" content="Qu&#39;s Blog">
+<meta property="og:description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-08T14:42:31.270Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Qu&#39;s Blog">
+<meta name="twitter:title" content="高度融合">
+<meta name="twitter:description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
 
 
 
@@ -105,13 +110,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/24/高度融合/"/>
 
 
 
 
 
-  <title>Qu's Blog</title>
+  <title>高度融合 | Qu's Blog</title>
   
 
 
@@ -130,8 +135,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -204,9 +208,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -236,9 +240,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/24/高度融合/" itemprop="url">高度融合</a></h1>
+          <h1 class="post-title" itemprop="name headline">高度融合</h1>
         
 
         <div class="post-meta">
@@ -310,9 +312,7 @@
       
 
       
-        
-          
-            <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
+        <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
 <p>在进行数据融合之前，先看下能得到高度信息的传感器都有哪些：</p>
 <p>1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可以接受，可以控制在5-10cm左右，但是长时间，比如静止放置十分钟或者更久，就会产生比较大的漂移，一般都会漂出去半米远，所以只用气压计融合加计并不能做出一个特别好的定高效果。</p>
 <p>2.加计，加计的数据要是姿态解算之后的数据，也就是大地坐标系下z轴加速度计数据，</p>
@@ -393,8 +393,6 @@ void ekf&lt;M, N&gt;::correct()
 
 #endif
 </code></pre>
-          
-        
       
     </div>
     
@@ -409,14 +407,20 @@ void ekf&lt;M, N&gt;::correct()
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/quadcopter/" rel="tag"># quadcopter</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -426,10 +430,11 @@ void ekf&lt;M, N&gt;::correct()
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -437,6 +442,10 @@ void ekf&lt;M, N&gt;::correct()
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -457,8 +466,17 @@ void ekf&lt;M, N&gt;::correct()
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -523,6 +541,22 @@ void ekf&lt;M, N&gt;::correct()
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
