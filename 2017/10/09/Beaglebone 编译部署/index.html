@@ -53,7 +53,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="quadcopter," />
+  <meta name="keywords" content="BeagleBone," />
 
 
 
@@ -69,18 +69,20 @@
 
 
 
-<meta name="description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
-<meta name="keywords" content="quadcopter">
+<meta name="description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Be">
+<meta name="keywords" content="BeagleBone">
 <meta property="og:type" content="article">
-<meta property="og:title" content="高度融合">
-<meta property="og:url" content="http://yoursite.com/2017/09/24/hello/index.html">
+<meta property="og:title" content="BeagleBone Blue 编译部署">
+<meta property="og:url" content="http://yoursite.com/2017/10/09/Beaglebone 编译部署/index.html">
 <meta property="og:site_name" content="Qu&#39;s Blog">
-<meta property="og:description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
+<meta property="og:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Be">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-08T14:42:31.270Z">
+<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
+<meta property="og:updated_time" content="2017-10-09T15:22:27.112Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="高度融合">
-<meta name="twitter:description" content="思路 在进行数据融合之前，先看下能得到高度信息的传感器都有哪些： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可">
+<meta name="twitter:title" content="BeagleBone Blue 编译部署">
+<meta name="twitter:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Be">
+<meta name="twitter:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
 
 
 
@@ -110,13 +112,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/24/hello/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/09/Beaglebone 编译部署/"/>
 
 
 
 
 
-  <title>高度融合 | Qu's Blog</title>
+  <title>BeagleBone Blue 编译部署 | Qu's Blog</title>
   
 
 
@@ -223,7 +225,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/hello/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/Beaglebone 编译部署/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu.L">
@@ -240,7 +242,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">高度融合</h1>
+          <h1 class="post-title" itemprop="name headline">BeagleBone Blue 编译部署</h1>
         
 
         <div class="post-meta">
@@ -252,8 +254,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T22:32:43+08:00">
-                2017-09-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T23:16:10+08:00">
+                2017-10-09
               </time>
             
 
@@ -275,8 +277,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/quadcopter/" itemprop="url" rel="index">
-                    <span itemprop="name">quadcopter</span>
+                  <a href="/categories/BeagleBone/" itemprop="url" rel="index">
+                    <span itemprop="name">BeagleBone</span>
                   </a>
                 </span>
 
@@ -312,87 +314,22 @@
       
 
       
-        <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><blockquote>
-<p>在进行数据融合之前，先看下能得到高度信息的传感器都有哪些：</p>
-<p>1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可以接受，可以控制在5-10cm左右，但是长时间，比如静止放置十分钟或者更久，就会产生比较大的漂移，一般都会漂出去半米远，所以只用气压计融合加计并不能做出一个特别好的定高效果。</p>
-<p>2.加计，加计的数据要是姿态解算之后的数据，也就是大地坐标系下z轴加速度计数据，</p>
+        <p>一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。</p>
+<blockquote>
+<p>Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：</p>
+<ol>
+<li>PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧。</li>
+<li>Visual Studio 2017 可以进行linux嵌入式开发了，可以直接在PC上编译生成可执行文件，然后直接在线debug，非常方便。但是我用Visual Studio的时候，一些linux头文件找不到，还有一些beaglebone的API头文件缺失，一直没有编译成功，可能是我方法有问题，这个后面有时间在解决。不过Hello World还是可以运行成功的。</li>
+<li>还有很多开发者是在linux上使用esplice或者Qt Creator再加上交叉编译工具进行开发的，也是可以直接运行部署到beaglebone上的，不过这种方法我并没有进行尝试。</li>
+</ol>
 </blockquote>
-<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><blockquote>
-<p>1.互补滤波，应该是比较简单的一种算法。把气压计得出的高度数据微分得出速度，加计积分也得出速度，之后相互融合。</p>
-<p>2.ekf，也就是扩展卡尔曼了，不过由于高度的状态方程是线性的，所以kf和ekf也就差别不大，ekf的算法关键的就是状态转移方程的建立了，不同的状态方程最后得出的效果也会略有区别，当然调参的小技巧可能也会不大一样，不过重点都是Q,R的参数调试。</p>
-<p>3.还有一种处理方式就是px4中最开始使用的一种算法，其实也是预测-校验的一种思路，只不过比ekf要简单一些。</p>
+<p>还是先记录下第一种方法怎么操作的吧：</p>
+<blockquote>
+<ol>
+<li>下载安装WinSCP<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png" alt="avatar"></li>
+</ol>
 </blockquote>
-<pre><code>#ifndef __ekf_h
-#define __ekf_h
 
-#include &quot;matrix.h&quot;
-#include &quot;inverse.h&quot;
-
-using namespace matrix;
-template &lt;int M, int N&gt;
-class ekf
-{
-
-  protected:
-    Matrix&lt;float, M, M&gt; P;
-    Matrix&lt;float, M, M&gt; Q;
-    Matrix&lt;float, N, N&gt; R;
-    Matrix&lt;float, M, M&gt; I;
-    Matrix&lt;float, M, M&gt; F;
-    Matrix&lt;float, N, M&gt; H;
-
-    Matrix&lt;float, M, 1&gt; X;
-    Matrix&lt;float, N, 1&gt; Z;
-
-  private:
-    Matrix&lt;float, N, 1&gt; Y;
-    Matrix&lt;float, N, N&gt; S;
-    Matrix&lt;float, N, N&gt; S_inv;
-    Matrix&lt;float, M, N&gt; K;
-
-  public:
-    void set_P(int m, int n, float value) { P(m, n) = value; }
-    void set_Q(int m, int n, float value) { Q(m, n) = value; }
-    void set_R(int m, int n, float value) { R(m, n) = value; }
-    void set_I(int m, int n, float value) { I(m, n) = value; }
-    void set_F(int m, int n, float value) { F(m, n) = value; }
-    void set_H(int m, int n, float value) { H(m, n) = value; }
-    void set_X(int m, int n, float value) { X(m, n) = value; }
-    void set_Z(int m, int n, float value) { Z(m, n) = value; }
-
-    void get_X(int m, int n) { return X(m, n); }
-
-    void predict();
-    void correct();
-};
-
-template &lt;int M, int N&gt;
-void ekf&lt;M, N&gt;::predict()
-{
-
-    X = F * X;
-
-    P = F * P * F.transpose() + Q;
-}
-
-template &lt;int M, int N&gt;
-void ekf&lt;M, N&gt;::correct()
-{
-
-    Y = Z - H * X;
-
-    S = H * P * H.transpose() + R;
-
-//    &amp;S_inv = inverse&lt;n&gt;(&amp;S);
-
-    K = P * H.transpose() * S_inv;
-
-    X = X + (K * Y);
-}
-
-
-#endif
-</code></pre>
       
     </div>
     
@@ -409,7 +346,7 @@ void ekf&lt;M, N&gt;::correct()
       
         <div class="post-tags">
           
-            <a href="/tags/quadcopter/" rel="tag"># quadcopter</a>
+            <a href="/tags/BeagleBone/" rel="tag"># BeagleBone</a>
           
         </div>
       
@@ -418,6 +355,22 @@ void ekf&lt;M, N&gt;::correct()
       
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/24/高度融合/" rel="next" title="高度融合">
+                <i class="fa fa-chevron-left"></i> 高度融合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
 
       
@@ -466,17 +419,8 @@ void ekf&lt;M, N&gt;::correct()
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -494,7 +438,7 @@ void ekf&lt;M, N&gt;::correct()
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -505,7 +449,7 @@ void ekf&lt;M, N&gt;::correct()
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -516,7 +460,7 @@ void ekf&lt;M, N&gt;::correct()
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -541,22 +485,6 @@ void ekf&lt;M, N&gt;::correct()
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
