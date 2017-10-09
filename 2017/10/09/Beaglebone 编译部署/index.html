@@ -69,19 +69,22 @@
 
 
 
-<meta name="description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Be">
+<meta name="description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
 <meta name="keywords" content="BeagleBone">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BeagleBone Blue 编译部署">
 <meta property="og:url" content="http://yoursite.com/2017/10/09/Beaglebone 编译部署/index.html">
 <meta property="og:site_name" content="Qu&#39;s Blog">
-<meta property="og:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Be">
+<meta property="og:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
-<meta property="og:updated_time" content="2017-10-09T15:22:27.112Z">
+<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%95%8C%E9%9D%A2.png">
+<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/putty%E6%93%8D%E4%BD%9C.png">
+<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/B%E5%86%99%E4%BB%A3%E7%A0%81%E7%95%8C%E9%9D%A2.png">
+<meta property="og:updated_time" content="2017-10-09T15:56:42.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BeagleBone Blue 编译部署">
-<meta name="twitter:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Be">
+<meta name="twitter:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
 <meta name="twitter:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
 
 
@@ -316,7 +319,7 @@
       
         <p>一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。</p>
 <blockquote>
-<p>Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以对这个的开发还是有些疑惑，今天查了下资料大概了解了开发步骤。主要有以下几种方式：</p>
+<p>Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：</p>
 <ol>
 <li>PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧。</li>
 <li>Visual Studio 2017 可以进行linux嵌入式开发了，可以直接在PC上编译生成可执行文件，然后直接在线debug，非常方便。但是我用Visual Studio的时候，一些linux头文件找不到，还有一些beaglebone的API头文件缺失，一直没有编译成功，可能是我方法有问题，这个后面有时间在解决。不过Hello World还是可以运行成功的。</li>
@@ -324,11 +327,14 @@
 </ol>
 </blockquote>
 <p>还是先记录下第一种方法怎么操作的吧：</p>
-<blockquote>
 <ol>
-<li>下载安装WinSCP<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png" alt="avatar"></li>
+<li>下载安装WinSCP<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png" alt="avatar"><br>2.填入Beaglebone的主机名，端口号，还有用户名和密码，点击登录即可。<br>登录之后的界面：<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%95%8C%E9%9D%A2.png" alt="avatar"><br>左边是PC的文件目录，右边是Beaglebone的文件目录，如果要复制文件直接拖过去就行了，挺方便的。</li>
 </ol>
-</blockquote>
+<p>3.在/home/debian文件夹中新建BeaglePilot文件夹，存放我们的工程项目。把我们在PC上写好的.c和Makefile直接拖过来。</p>
+<p>4.在Putty或者WinSCP直接打开一个终端进入BeaglePilot目录，<code>ls</code>会看到我们刚拖进来的两个文件，然后<code>make BeaglePilot</code>编译生成可执行文件，这时候再<code>ls</code>就会看到生成的.o文件了，<code>sudo ./BeaglePilot</code>命令之后输入密码就可以执行我们的代码了。<br><img src="http://owsesa4hj.bkt.clouddn.com/putty%E6%93%8D%E4%BD%9C.png" alt="avatar"></p>
+<p>这样就可以直接在PC上用自己熟悉的编辑器写完代码，部署到Beaglebone上面，直接Make，然后执行，非常方便。</p>
+<p><img src="http://owsesa4hj.bkt.clouddn.com/B%E5%86%99%E4%BB%A3%E7%A0%81%E7%95%8C%E9%9D%A2.png" alt="avatar"></p>
+<p>后面有时间还是研究下后面两种调试方式吧，看下哪种更高效一些，接下来就可以快速验证自己的算法了。</p>
 
       
     </div>
