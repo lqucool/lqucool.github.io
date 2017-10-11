@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -107,13 +107,16 @@
 
 
 
+<meta name="description" content="Stay Hungry, Stay Foolish.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Qu&#39;s Blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="Qu&#39;s Blog">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="Stay Hungry, Stay Foolish.">
+<meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Qu&#39;s Blog">
+<meta name="twitter:description" content="Stay Hungry, Stay Foolish.">
 
 
 
@@ -129,7 +132,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
     duoshuo: {
       userId: '0',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -168,7 +171,7 @@
         border-left-color: #1E92FB;    /*左边框颜色*/
     }
 </style>
-  <title> Quadcopter - Qu's Blog -  </title>
+  <title> Quadcopter - Qu's Blog - Stay Hungry, Stay Foolish. </title>
   
 
 
@@ -180,7 +183,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
   
   
@@ -229,7 +232,27 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            首页
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -239,7 +262,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -252,7 +275,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            搜索
+            Search
           </a>
         </li>
       
@@ -272,7 +295,7 @@
     </span>
     <div class="local-search-input-wrapper">
       <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
+             placeholder="Searching..." spellcheck="false"
              type="text" id="local-search-input">
     </div>
   </div>
@@ -310,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/10/高度融合/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/Beaglebone 编译部署/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu.L">
@@ -329,7 +352,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/10/高度融合/" itemprop="url">高度融合</a></h1>
+                <a class="post-title-link" href="/2017/10/09/Beaglebone 编译部署/" itemprop="url">BeagleBone Blue 编译部署</a></h1>
         
 
         <div class="post-meta">
@@ -339,10 +362,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T23:52:13+08:00">
-                2017-10-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-09T00:00:00+08:00">
+                2017-10-09
               </time>
             
 
@@ -360,12 +383,12 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/quadcopter/" itemprop="url" rel="index">
-                    <span itemprop="name">quadcopter</span>
+                  <a href="/categories/beagleBone/" itemprop="url" rel="index">
+                    <span itemprop="name">beagleBone</span>
                   </a>
                 </span>
 
@@ -402,11 +425,17 @@
 
       
         
-          <p><img src="http://owsesa4hj.bkt.clouddn.com/publications1.jpg" alt="avatar"></p>
+          
+          一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。
+
+Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：
+
+PC上使用VS C
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/10/高度融合/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="btn" href="/2017/10/09/Beaglebone 编译部署/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -456,7 +485,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/10/Beaglebone 编译部署/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/高度融合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu.L">
@@ -475,7 +504,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/10/Beaglebone 编译部署/" itemprop="url">BeagleBone Blue 编译部署</a></h1>
+                <a class="post-title-link" href="/2017/09/24/高度融合/" itemprop="url">高度融合</a></h1>
         
 
         <div class="post-meta">
@@ -485,10 +514,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T23:19:59+08:00">
-                2017-10-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-24T00:00:00+08:00">
+                2017-09-24
               </time>
             
 
@@ -506,12 +535,12 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BeagleBone/" itemprop="url" rel="index">
-                    <span itemprop="name">BeagleBone</span>
+                  <a href="/categories/quadcopter/" itemprop="url" rel="index">
+                    <span itemprop="name">quadcopter</span>
                   </a>
                 </span>
 
@@ -548,17 +577,11 @@
 
       
         
-          
-          一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。
-
-Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：
-
-PC上使用VS C
-          ...
+          <p><img src="http://owsesa4hj.bkt.clouddn.com/publications1.jpg" alt="avatar"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/10/Beaglebone 编译部署/#more" rel="contents">
-              阅读全文 &raquo;
+            <a class="btn" href="/2017/09/24/高度融合/#more" rel="contents">
+              Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
@@ -634,7 +657,7 @@ PC上使用VS C
               alt="Qu.L" />
           
             <p class="site-author-name" itemprop="name">Qu.L</p>
-            <p class="site-description motion-element" itemprop="description"></p>
+            <p class="site-description motion-element" itemprop="description">Stay Hungry, Stay Foolish.</p>
         </div>
 
         <nav class="site-state motion-element">
@@ -645,7 +668,7 @@ PC上使用VS C
               <a href="/archives/">
             
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">日志</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -654,10 +677,10 @@ PC上使用VS C
             
             
             <div class="site-state-item site-state-categories">
-              
+              <a href="/categories/index.html">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">分类</span>
-              
+                <span class="site-state-item-name">categories</span>
+              </a>
             </div>
           
 
@@ -665,10 +688,10 @@ PC上使用VS C
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">标签</span>
-              
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
             </div>
           
 

@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="quadcopter," />
+  <meta name="keywords" content="quadcopter,height fusion," />
 
 
 
@@ -107,14 +107,14 @@
 
 
 
-<meta name="keywords" content="quadcopter">
+<meta name="keywords" content="quadcopter,height fusion">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高度融合">
-<meta property="og:url" content="http://yoursite.com/2017/10/10/高度融合/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/09/24/高度融合/index.html">
 <meta property="og:site_name" content="Qu&#39;s Blog">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="en">
 <meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/publications1.jpg">
-<meta property="og:updated_time" content="2017-10-10T15:52:13.256Z">
+<meta property="og:updated_time" content="2017-10-09T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高度融合">
 <meta name="twitter:image" content="http://owsesa4hj.bkt.clouddn.com/publications1.jpg">
@@ -133,7 +133,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
     duoshuo: {
       userId: '0',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -147,7 +147,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/10/高度融合/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/24/高度融合/"/>
 
 
 
@@ -184,7 +184,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
   
   
@@ -232,7 +232,27 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            首页
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
           </a>
         </li>
       
@@ -242,7 +262,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -255,7 +275,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-            搜索
+            Search
           </a>
         </li>
       
@@ -275,7 +295,7 @@
     </span>
     <div class="local-search-input-wrapper">
       <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
+             placeholder="Searching..." spellcheck="false"
              type="text" id="local-search-input">
     </div>
   </div>
@@ -313,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/10/高度融合/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/高度融合/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu.L">
@@ -340,10 +360,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-10T23:52:13+08:00">
-                2017-10-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-24T00:00:00+08:00">
+                2017-09-24
               </time>
             
 
@@ -361,7 +381,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -404,8 +424,7 @@
       
         <p><img src="http://owsesa4hj.bkt.clouddn.com/publications1.jpg" alt="avatar"></p>
 <a id="more"></a>
-<p>关于定高的算法还是边做边整理吧，有很多细节需要注意的，算法也有很多种，有时间一个个验证下，做个对比。</p>
-<h3 id="思路整理"><a href="#思路整理" class="headerlink" title="思路整理"></a>思路整理</h3><p>在进行数据融合之前，先看下能得到高度信息的传感器都有哪些：</p>
+<h3 id="思路整理"><a href="#思路整理" class="headerlink" title="思路整理"></a>思路整理</h3><p>数据融合所需要的传感器数据：</p>
 <ul>
 <li>1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可以接受，可以控制在5-10cm左右，但是长时间，比如静止放置十分钟或者更久，就会产生比较大的漂移，一般都会漂出去半米远，所以只用气压计融合加计并不能做出一个特别好的定高效果。</li>
 <li>2.加计，加计的数据要是姿态解算之后的数据，也就是大地坐标系下z轴加速度计数据，要减去重力加速度。姿态解算之后的加计噪声应该会比较小了。</li>
@@ -431,12 +450,32 @@
     
 
     
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qu.L
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://yoursite.com/2017/09/24/高度融合/" title="高度融合">http://yoursite.com/2017/09/24/高度融合/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
+      </div>
+    
 
     <footer class="post-footer">
       
         <div class="post-tags">
           
             <a href="/tags/quadcopter/" rel="tag"><i class="fa fa-tag"></i> quadcopter</a>
+          
+            <a href="/tags/height-fusion/" rel="tag"><i class="fa fa-tag"></i> height fusion</a>
           
         </div>
       
@@ -449,15 +488,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/10/Beaglebone 编译部署/" rel="next" title="BeagleBone Blue 编译部署">
-                <i class="fa fa-chevron-left"></i> BeagleBone Blue 编译部署
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/09/Beaglebone 编译部署/" rel="prev" title="BeagleBone Blue 编译部署">
+                BeagleBone Blue 编译部署 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -511,10 +550,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -527,7 +566,7 @@
               alt="Qu.L" />
           
             <p class="site-author-name" itemprop="name">Qu.L</p>
-            <p class="site-description motion-element" itemprop="description"></p>
+            <p class="site-description motion-element" itemprop="description">Stay Hungry, Stay Foolish.</p>
         </div>
 
         <nav class="site-state motion-element">
@@ -538,7 +577,7 @@
               <a href="/archives/">
             
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">日志</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -547,10 +586,10 @@
             
             
             <div class="site-state-item site-state-categories">
-              
+              <a href="/categories/index.html">
                 <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">分类</span>
-              
+                <span class="site-state-item-name">categories</span>
+              </a>
             </div>
           
 
@@ -558,10 +597,10 @@
             
             
             <div class="site-state-item site-state-tags">
-              
-                <span class="site-state-item-count">2</span>
-                <span class="site-state-item-name">标签</span>
-              
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
             </div>
           
 
