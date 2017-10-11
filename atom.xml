@@ -5,9 +5,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://lqucool.github.io/"/>
   <updated>2017-10-09T16:00:00.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://lqucool.github.io/</id>
   
   <author>
     <name>Qu.L</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>BeagleBone Blue 编译部署</title>
-    <link href="http://yoursite.com/2017/10/09/Beaglebone%20%E7%BC%96%E8%AF%91%E9%83%A8%E7%BD%B2/"/>
-    <id>http://yoursite.com/2017/10/09/Beaglebone 编译部署/</id>
+    <link href="https://lqucool.github.io/2017/10/09/Beaglebone%20%E7%BC%96%E8%AF%91%E9%83%A8%E7%BD%B2/"/>
+    <id>https://lqucool.github.io/2017/10/09/Beaglebone 编译部署/</id>
     <published>2017-10-08T16:00:00.000Z</published>
     <updated>2017-10-09T16:00:00.000Z</updated>
     
@@ -36,17 +36,17 @@
     
     </summary>
     
-      <category term="beagleBone" scheme="http://yoursite.com/categories/beagleBone/"/>
+      <category term="beagleBone" scheme="https://lqucool.github.io/categories/beagleBone/"/>
     
     
-      <category term="beagleBone" scheme="http://yoursite.com/tags/beagleBone/"/>
+      <category term="beagleBone" scheme="https://lqucool.github.io/tags/beagleBone/"/>
     
   </entry>
   
   <entry>
     <title>高度融合</title>
-    <link href="http://yoursite.com/2017/09/24/%E9%AB%98%E5%BA%A6%E8%9E%8D%E5%90%88/"/>
-    <id>http://yoursite.com/2017/09/24/高度融合/</id>
+    <link href="https://lqucool.github.io/2017/09/24/%E9%AB%98%E5%BA%A6%E8%9E%8D%E5%90%88/"/>
+    <id>https://lqucool.github.io/2017/09/24/高度融合/</id>
     <published>2017-09-23T16:00:00.000Z</published>
     <updated>2017-10-09T16:00:00.000Z</updated>
     
@@ -58,12 +58,12 @@
     
     </summary>
     
-      <category term="quadcopter" scheme="http://yoursite.com/categories/quadcopter/"/>
+      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
     
     
-      <category term="quadcopter" scheme="http://yoursite.com/tags/quadcopter/"/>
+      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
-      <category term="height fusion" scheme="http://yoursite.com/tags/height-fusion/"/>
+      <category term="height fusion" scheme="https://lqucool.github.io/tags/height-fusion/"/>
     
   </entry>
   
