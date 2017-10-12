@@ -43,7 +43,7 @@
     
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
-      <category term="height fusion" scheme="https://lqucool.github.io/tags/height-fusion/"/>
+      <category term="position control" scheme="https://lqucool.github.io/tags/position-control/"/>
     
   </entry>
   
@@ -74,7 +74,7 @@
     
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
-      <category term="height fusion" scheme="https://lqucool.github.io/tags/height-fusion/"/>
+      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
     
   </entry>
   
