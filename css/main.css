@@ -301,13 +301,13 @@ hr {
   margin: 40px 0;
   height: 3px;
   border: none;
-  background-color: #ddd;
+  background-color: $gray-lighter;
   background-image: repeating-linear-gradient(-45deg, #fff, #fff 4px, transparent 4px, transparent 8px);
 }
 blockquote {
   padding: 0 15px;
   color: #666;
-  border-left: 4px solid #ddd;
+  border-left: 4px solid $gray-lighter;
 }
 blockquote cite::before {
   content: "-";
@@ -403,7 +403,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   border-spacing: 0;
-  border: 1px solid #ddd;
+  border: 1px solid $gray-lighter;
   font-size: 14px;
   table-layout: fixed;
   word-wrap: break-all;
@@ -424,7 +424,7 @@ td {
 }
 th,
 td {
-  border-bottom: 3px solid #ddd;
+  border-bottom: 3px solid $gray-lighter;
   border-right: 1px solid #eee;
 }
 th {
@@ -904,16 +904,16 @@ pre .javascript .function {
 }
 .post-body .tabs ul.nav-tabs li.tab.active {
   border-top: 3px solid #fc6423;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+  border-left: 1px solid $gray-lighter;
+  border-right: 1px solid $gray-lighter;
   background-color: #fff;
 }
 @media (max-width: 413px) {
   .post-body .tabs ul.nav-tabs li.tab.active {
-    border-top: 1px solid #ddd;
+    border-top: 1px solid $gray-lighter;
     border-left: 3px solid #fc6423;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-right: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-lighter;
   }
 }
 .post-body .tabs ul.nav-tabs li.tab.active a {
@@ -924,7 +924,7 @@ pre .javascript .function {
   background-color: #fff;
 }
 .post-body .tabs .tab-content .tab-pane {
-  border: 1px solid #ddd;
+  border: 1px solid $gray-lighter;
   padding: 20px 20px 0 20px;
 }
 .post-body .tabs .tab-content .tab-pane:not(.active) {
@@ -1161,7 +1161,7 @@ pre .javascript .function {
     margin: 0 -10px;
     padding: 0 10px;
     clear: both;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid $gray-lighter;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -1320,7 +1320,7 @@ pre .javascript .function {
   box-sizing: border-box;
   margin: auto;
   padding: 3px;
-  border: 1px solid #ddd;
+  border: 1px solid $gray-lighter;
 }
 .posts-expand .post-body .fancybox img {
   margin: 0 auto 25px;
@@ -1825,7 +1825,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e28541;
+  background: #eb9c5b;
 }
 .links-of-blogroll {
   font-size: 13px;

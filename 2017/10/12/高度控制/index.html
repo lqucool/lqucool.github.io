@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="beagleBone," />
+  <meta name="keywords" content="quadcopter,height fusion," />
 
 
 
@@ -107,23 +107,18 @@
 
 
 
-<meta name="description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
-<meta name="keywords" content="beagleBone">
+<meta name="description" content="思路 todo   框架 todo   实现 todo">
+<meta name="keywords" content="quadcopter,height fusion">
 <meta property="og:type" content="article">
-<meta property="og:title" content="BeagleBone Blue 编译部署">
-<meta property="og:url" content="https://lqucool.github.io/2017/10/09/Beaglebone 编译部署/index.html">
+<meta property="og:title" content="高度控制">
+<meta property="og:url" content="https://lqucool.github.io/2017/10/12/高度控制/index.html">
 <meta property="og:site_name" content="Let the ideas fly">
-<meta property="og:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
+<meta property="og:description" content="思路 todo   框架 todo   实现 todo">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
-<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%95%8C%E9%9D%A2.png">
-<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/putty%E6%93%8D%E4%BD%9C.png">
-<meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/B%E5%86%99%E4%BB%A3%E7%A0%81%E7%95%8C%E9%9D%A2.png">
-<meta property="og:updated_time" content="2017-10-09T16:00:00.000Z">
+<meta property="og:updated_time" content="2017-10-11T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BeagleBone Blue 编译部署">
-<meta name="twitter:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
-<meta name="twitter:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
+<meta name="twitter:title" content="高度控制">
+<meta name="twitter:description" content="思路 todo   框架 todo   实现 todo">
 
 
 
@@ -153,7 +148,7 @@
 
 
 
-  <link rel="canonical" href="https://lqucool.github.io/2017/10/09/Beaglebone 编译部署/"/>
+  <link rel="canonical" href="https://lqucool.github.io/2017/10/12/高度控制/"/>
 
 
 
@@ -178,7 +173,7 @@
         border-left-color: #1E92FB;    /*左边框颜色*/
     }
 </style>
-  <title>BeagleBone Blue 编译部署 | Let the ideas fly</title>
+  <title>高度控制 | Let the ideas fly</title>
   
 
 
@@ -349,7 +344,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lqucool.github.io/2017/10/09/Beaglebone 编译部署/">
+    <link itemprop="mainEntityOfPage" href="https://lqucool.github.io/2017/10/12/高度控制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu.L">
@@ -366,7 +361,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">BeagleBone Blue 编译部署</h1>
+          <h1 class="post-title" itemprop="name headline">高度控制</h1>
         
 
         <div class="post-meta">
@@ -378,8 +373,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-09T00:00:00+08:00">
-                2017-10-09
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-12T00:00:00+08:00">
+                2017-10-12
               </time>
             
 
@@ -394,8 +389,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2017-10-10T00:00:00+08:00">
-                2017-10-10
+              <time title="Post modified" itemprop="dateModified" datetime="2017-10-12T00:00:00+08:00">
+                2017-10-12
               </time>
             
           </span>
@@ -413,8 +408,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/beagleBone/" itemprop="url" rel="index">
-                    <span itemprop="name">beagleBone</span>
+                  <a href="/categories/quadcopter/" itemprop="url" rel="index">
+                    <span itemprop="name">quadcopter</span>
                   </a>
                 </span>
 
@@ -450,24 +445,18 @@
       
 
       
-        <p>一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。</p>
-<blockquote>
-<p>Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：</p>
-<ol>
-<li>PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧。</li>
-<li>Visual Studio 2017 可以进行linux嵌入式开发了，可以直接在PC上编译生成可执行文件，然后直接在线debug，非常方便。但是我用Visual Studio的时候，一些linux头文件找不到，还有一些beaglebone的API头文件缺失，一直没有编译成功，可能是我方法有问题，这个后面有时间在解决。不过Hello World还是可以运行成功的。</li>
-<li>还有很多开发者是在linux上使用esplice或者Qt Creator再加上交叉编译工具进行开发的，也是可以直接运行部署到beaglebone上的，不过这种方法我并没有进行尝试。</li>
-</ol>
+        <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote>
+<p>todo</p>
 </blockquote>
-<p>还是先记录下第一种方法怎么操作的吧：</p>
-<ol>
-<li>下载安装WinSCP<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png" alt="avatar"><br>2.填入Beaglebone的主机名，端口号，还有用户名和密码，点击登录即可。<br>登录之后的界面：<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%95%8C%E9%9D%A2.png" alt="avatar"><br>左边是PC的文件目录，右边是Beaglebone的文件目录，如果要复制文件直接拖过去就行了，挺方便的。</li>
-</ol>
-<p>3.在/home/debian文件夹中新建BeaglePilot文件夹，存放我们的工程项目。把我们在PC上写好的.c和Makefile直接拖过来。</p>
-<p>4.在Putty或者WinSCP直接打开一个终端进入BeaglePilot目录，<code>ls</code>会看到我们刚拖进来的两个文件，然后<code>make BeaglePilot</code>编译生成可执行文件，这时候再<code>ls</code>就会看到生成的.o文件了，<code>sudo ./BeaglePilot</code>命令之后输入密码就可以执行我们的代码了。<br><img src="http://owsesa4hj.bkt.clouddn.com/putty%E6%93%8D%E4%BD%9C.png" alt="avatar"></p>
-<p>这样就可以直接在PC上用自己熟悉的编辑器写完代码，部署到Beaglebone上面，直接Make，然后执行，非常方便。</p>
-<p><img src="http://owsesa4hj.bkt.clouddn.com/B%E5%86%99%E4%BB%A3%E7%A0%81%E7%95%8C%E9%9D%A2.png" alt="avatar"></p>
-<p>后面有时间还是研究下后面两种调试方式吧，看下哪种更高效一些，接下来就可以快速验证自己的算法了。</p>
+<hr>
+<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><blockquote>
+<p>todo</p>
+</blockquote>
+<hr>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><blockquote>
+<p>todo</p>
+</blockquote>
+<hr>
 
       
     </div>
@@ -488,7 +477,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="https://lqucool.github.io/2017/10/09/Beaglebone 编译部署/" title="BeagleBone Blue 编译部署">https://lqucool.github.io/2017/10/09/Beaglebone 编译部署/</a>
+    <a href="https://lqucool.github.io/2017/10/12/高度控制/" title="高度控制">https://lqucool.github.io/2017/10/12/高度控制/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -520,7 +509,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/beagleBone/" rel="tag"><i class="fa fa-tag"></i> beagleBone</a>
+            <a href="/tags/quadcopter/" rel="tag"><i class="fa fa-tag"></i> quadcopter</a>
+          
+            <a href="/tags/height-fusion/" rel="tag"><i class="fa fa-tag"></i> height fusion</a>
           
         </div>
       
@@ -533,8 +524,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/09/24/高度融合/" rel="next" title="高度融合">
-                <i class="fa fa-chevron-left"></i> 高度融合
+              <a href="/2017/10/09/Beaglebone 编译部署/" rel="next" title="BeagleBone Blue 编译部署">
+                <i class="fa fa-chevron-left"></i> BeagleBone Blue 编译部署
               </a>
             
           </div>
@@ -543,8 +534,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/12/高度控制/" rel="prev" title="高度控制">
-                高度控制 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/12/位置控制-px4/" rel="prev" title="位置控制-px4">
+                位置控制-px4 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -597,8 +588,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -670,6 +670,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">2.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -378,7 +378,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2017-10-10T00:00:00+08:00">
+                2017-10-10
+              </time>
             
           </span>
 
@@ -434,7 +446,7 @@
       
         <p><img src="http://owsesa4hj.bkt.clouddn.com/publications1.jpg" alt="avatar"></p>
 <a id="more"></a>
-<h3 id="思路整理"><a href="#思路整理" class="headerlink" title="思路整理"></a>思路整理</h3><p>数据融合所需要的传感器数据：</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>数据融合所需要的传感器数据：</p>
 <ul>
 <li>1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可以接受，可以控制在5-10cm左右，但是长时间，比如静止放置十分钟或者更久，就会产生比较大的漂移，一般都会漂出去半米远，所以只用气压计融合加计并不能做出一个特别好的定高效果。</li>
 <li>2.加计，加计的数据要是姿态解算之后的数据，也就是大地坐标系下z轴加速度计数据，要减去重力加速度。姿态解算之后的加计噪声应该会比较小了。</li>
@@ -442,11 +454,14 @@
 <li>4.激光传感器，激光传感器本身的价格是非常贵的，但是最近TOF测距的技术发展很快，国内已经有TOF测距可以到12米甚至更远的距离，价格也不算贵，精度是非常高，cm级的精度了，更新频率几十Hz到几百Hz的都有。</li>
 </ul>
 <hr>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><blockquote>
-<p>1.互补滤波，应该是比较简单的一种算法。把气压计得出的高度数据微分得出速度，加计积分也得出速度，之后相互融合。</p>
-<p>2.ekf，也就是扩展卡尔曼了，不过由于高度的状态方程是线性的，所以kf和ekf也就差别不大，ekf的算法关键的就是状态转移方程的建立了，不同的状态方程最后得出的效果也会略有区别，当然调参的小技巧可能也会不大一样，不过重点都是Q,R的参数调试。</p>
-<p>3.还有一种处理方式就是px4中最开始使用的一种算法，其实也是预测-校验的一种思路，只不过比ekf要简单一些。</p>
-</blockquote>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li><p>1.互补滤波，应该是比较简单的一种算法。把气压计得出的高度数据微分得出速度，加计积分也得出速度，之后相互融合。</p>
+</li>
+<li><p>2.ekf，也就是扩展卡尔曼了，不过由于高度的状态方程是线性的，所以kf和ekf也就差别不大，ekf的算法关键的就是状态转移方程的建立了，不同的状态方程最后得出的效果也会略有区别，当然调参的小技巧可能也会不大一样，不过重点都是Q,R的参数调试。</p>
+</li>
+<li><p>3.还有一种处理方式就是px4中最开始使用的一种算法，其实也是预测-校验的一种思路，只不过比ekf要简单一些。</p>
+</li>
+</ul>
 <p>​<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __ekf_h</span></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> __ekf_h</span></div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"matrix.h"</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"inverse.h"</span></span></div><div class="line"></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> matrix;</div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> M, <span class="keyword">int</span> N&gt;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ekf</span></span></div><div class="line"><span class="class">&#123;</span></div><div class="line"></div><div class="line">  <span class="keyword">protected</span>:</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, M, M&gt; P;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, M, M&gt; Q;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, N, N&gt; R;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, M, M&gt; I;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, M, M&gt; F;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, N, M&gt; H;</div><div class="line"></div><div class="line">    Matrix&lt;<span class="keyword">float</span>, M, <span class="number">1</span>&gt; X;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, N, <span class="number">1</span>&gt; Z;</div><div class="line"></div><div class="line">  <span class="keyword">private</span>:</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, N, <span class="number">1</span>&gt; Y;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, N, N&gt; S;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, N, N&gt; S_inv;</div><div class="line">    Matrix&lt;<span class="keyword">float</span>, M, N&gt; K;</div><div class="line"></div><div class="line">  <span class="keyword">public</span>:</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_P</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; P(m, n) = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_Q</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; Q(m, n) = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_R</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; R(m, n) = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_I</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; I(m, n) = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_F</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; F(m, n) = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_H</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; H(m, n) = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_X</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; X(m, n) = value; &#125;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">set_Z</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">float</span> value)</span> </span>&#123; Z(m, n) = value; &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">get_X</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123; <span class="keyword">return</span> X(m, n); &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">predict</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">correct</span><span class="params">()</span></span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> M, <span class="keyword">int</span> N&gt;</div><div class="line"><span class="keyword">void</span> ekf&lt;M, N&gt;::predict()</div><div class="line">&#123;</div><div class="line"></div><div class="line">    X = F * X;</div><div class="line"></div><div class="line">    P = F * P * F.transpose() + Q;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">int</span> M, <span class="keyword">int</span> N&gt;</div><div class="line"><span class="keyword">void</span> ekf&lt;M, N&gt;::correct()</div><div class="line">&#123;</div><div class="line">	</div><div class="line">    Y = Z - H * X;</div><div class="line"></div><div class="line">    S = H * P * H.transpose() + R;</div><div class="line"></div><div class="line"><span class="comment">//    &amp;S_inv = inverse&lt;n&gt;(&amp;S);</span></div><div class="line"></div><div class="line">    K = P * H.transpose() * S_inv;</div><div class="line"></div><div class="line">    X = X + (K * Y);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div></pre></td></tr></table></figure></p>
 
       
@@ -603,7 +618,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -667,7 +682,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路整理"><span class="nav-number">1.</span> <span class="nav-text">思路整理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法"><span class="nav-number">2.</span> <span class="nav-text">算法</span></a></li></ol></div>
             
 
           </div>
