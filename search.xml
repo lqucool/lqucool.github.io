@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[位置控制-px4]]></title>
-    <url>%2F2017%2F10%2F12%2F%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6-px4%2F</url>
-    <content type="text"><![CDATA[思路 todo 框架 todo 实现 todo]]></content>
-      <categories>
-        <category>quadcopter</category>
-      </categories>
-      <tags>
-        <tag>quadcopter</tag>
-        <tag>position control</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[高度控制]]></title>
     <url>%2F2017%2F10%2F12%2F%E9%AB%98%E5%BA%A6%E6%8E%A7%E5%88%B6%2F</url>
-    <content type="text"><![CDATA[思路 todo 框架 todo 实现 todo]]></content>
+    <content type="text"><![CDATA[思路关于高度控制有两种不同的控制方式： 遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。 notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定当前高度，则飞行器会先上升一段高度，等到实际速度减为0，再下降悬停到锁定的高度，也就是油门回中时的高度。这种方式用户体验并不是很好，会给人一种很不稳的感觉。所以更好的应该是油门回中之后，飞行器应该悬停在实际飞行速度减为0的时候的高度而不是油门回中时的高度。 遥控器油门还是代表期望速度，但是把期望速度积分得出期望位置。油门不回中时，期望速度不为0，积分后期望位置在不停更新，油门推进时由位置环和速度环嵌套。油门回中时，期望速度为0，积分后的期望位置不发生改变，飞行器即悬停。 框架 todo:待补充 实现 todo:待完善 控制目标速度123456789101112131415161718192021222324252627float _dst_vel_z; // destination velocityfloat _est_vel_z; // estimate velocityfloat _dst_pos_z; // destination positionfloat _est_pos_z; // estimate positionbool _dst_pos_z_locked; // calc desired pos_z by velocity_zif ( fabsf( _dst_vel_z ) &lt; 5 ) &#123; // usr wanna stop if ( fabsf( _est_vel_z ) &lt; 15 ) &#123; // craft is slow enough if ( !_dst_pos_z_locked ) &#123; // pos_z not fixed _dst_pos_z = _est_pos_z; _dst_pos_z_locked = true; &#125; &#125;else&#123; // craft is fast。这里有一个风险：永远控不到较小的速度，位移环就一直不起作用 if ( !_dst_pos_z_locked ) &#123; // craft is fast, but not fixed now, ctrl speed until slow enough _dst_pos_z = _est_pos_z; &#125; //else&#123; // else craft is speed up by extern force( wind, sudden turn-around. etc... ) // desired position should still hold( but maybe changed when difference is too large ) //&#125; &#125;&#125;else&#123; // users wanna move _dst_pos_z = _est_pos_z; _dst_pos_z_locked = false;&#125;]]></content>
       <categories>
         <category>quadcopter</category>
       </categories>
       <tags>
         <tag>quadcopter</tag>
         <tag>height control</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[位置控制-px4]]></title>
+    <url>%2F2017%2F10%2F12%2F%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6-px4%2F</url>
+    <content type="text"><![CDATA[主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件 未完待续！ 思路 todo 框架 todo 实现 todo]]></content>
+      <categories>
+        <category>quadcopter</category>
+      </categories>
+      <tags>
+        <tag>quadcopter</tag>
+        <tag>position control</tag>
       </tags>
   </entry>
   <entry>
@@ -38,7 +38,7 @@
   <entry>
     <title><![CDATA[高度融合]]></title>
     <url>%2F2017%2F09%2F24%2F%E9%AB%98%E5%BA%A6%E8%9E%8D%E5%90%88%2F</url>
-    <content type="text"><![CDATA[思路数据融合所需要的传感器数据： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可以接受，可以控制在5-10cm左右，但是长时间，比如静止放置十分钟或者更久，就会产生比较大的漂移，一般都会漂出去半米远，所以只用气压计融合加计并不能做出一个特别好的定高效果。 2.加计，加计的数据要是姿态解算之后的数据，也就是大地坐标系下z轴加速度计数据，要减去重力加速度。姿态解算之后的加计噪声应该会比较小了。 3.超声波，这个我没怎么用过，但是一直感觉这玩意效果也不是很好，距离又近，一般就只有3-5米远吧，个别也有更远一些的，但是价格就贵了，发射角又大，而且非常容易受到振动和气流的影响。 4.激光传感器，激光传感器本身的价格是非常贵的，但是最近TOF测距的技术发展很快，国内已经有TOF测距可以到12米甚至更远的距离，价格也不算贵，精度是非常高，cm级的精度了，更新频率几十Hz到几百Hz的都有。 算法 1.互补滤波，应该是比较简单的一种算法。把气压计得出的高度数据微分得出速度，加计积分也得出速度，之后相互融合。 2.ekf，也就是扩展卡尔曼了，不过由于高度的状态方程是线性的，所以kf和ekf也就差别不大，ekf的算法关键的就是状态转移方程的建立了，不同的状态方程最后得出的效果也会略有区别，当然调参的小技巧可能也会不大一样，不过重点都是Q,R的参数调试。 3.还有一种处理方式就是px4中最开始使用的一种算法，其实也是预测-校验的一种思路，只不过比ekf要简单一些。 ​123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869#ifndef __ekf_h#define __ekf_h#include "matrix.h"#include "inverse.h"using namespace matrix;template &lt;int M, int N&gt;class ekf&#123; protected: Matrix&lt;float, M, M&gt; P; Matrix&lt;float, M, M&gt; Q; Matrix&lt;float, N, N&gt; R; Matrix&lt;float, M, M&gt; I; Matrix&lt;float, M, M&gt; F; Matrix&lt;float, N, M&gt; H; Matrix&lt;float, M, 1&gt; X; Matrix&lt;float, N, 1&gt; Z; private: Matrix&lt;float, N, 1&gt; Y; Matrix&lt;float, N, N&gt; S; Matrix&lt;float, N, N&gt; S_inv; Matrix&lt;float, M, N&gt; K; public: void set_P(int m, int n, float value) &#123; P(m, n) = value; &#125; void set_Q(int m, int n, float value) &#123; Q(m, n) = value; &#125; void set_R(int m, int n, float value) &#123; R(m, n) = value; &#125; void set_I(int m, int n, float value) &#123; I(m, n) = value; &#125; void set_F(int m, int n, float value) &#123; F(m, n) = value; &#125; void set_H(int m, int n, float value) &#123; H(m, n) = value; &#125; void set_X(int m, int n, float value) &#123; X(m, n) = value; &#125; void set_Z(int m, int n, float value) &#123; Z(m, n) = value; &#125; void get_X(int m, int n) &#123; return X(m, n); &#125; void predict(); void correct();&#125;;template &lt;int M, int N&gt;void ekf&lt;M, N&gt;::predict()&#123; X = F * X; P = F * P * F.transpose() + Q;&#125;template &lt;int M, int N&gt;void ekf&lt;M, N&gt;::correct()&#123; Y = Z - H * X; S = H * P * H.transpose() + R;// &amp;S_inv = inverse&lt;n&gt;(&amp;S); K = P * H.transpose() * S_inv; X = X + (K * Y);&#125;#endif]]></content>
+    <content type="text"><![CDATA[思路数据融合所需要的传感器数据： 1.气压计：在没有超声波，激光测距等传感器的时候，算是比较可靠的一个传感器了，但是其效果也就是仅仅能用，想要比较好的效果的话还是要超声波或激光的。气压计目前比较好的精度也就是10cm，的确上下移动10cm也会有效果，但是其噪声实在太大，噪声波动一般都在50cm+，所以一般都会融合加计，融合的算法有很多种，融合之后的效果在短时间内还可以接受，可以控制在5-10cm左右，但是长时间，比如静止放置十分钟或者更久，就会产生比较大的漂移，一般都会漂出去半米远，所以只用气压计融合加计并不能做出一个特别好的定高效果。 2.加计，加计的数据要是姿态解算之后的数据，也就是大地坐标系下z轴加速度计数据，要减去重力加速度。姿态解算之后的加计噪声应该会比较小了。 3.超声波，这个我没怎么用过，但是一直感觉这玩意效果也不是很好，距离又近，一般就只有3-5米远吧，个别也有更远一些的，但是价格就贵了，发射角又大，而且非常容易受到振动和气流的影响。 4.激光传感器，激光传感器本身的价格是非常贵的，但是最近TOF测距的技术发展很快，国内已经有TOF测距可以到12米甚至更远的距离，价格也不算贵，精度是非常高，cm级的精度了，更新频率几十Hz到几百Hz的都有。 算法 1.互补滤波，应该是比较简单的一种算法。把气压计得出的高度数据微分得出速度，加计积分也得出速度，之后相互融合。 2.ekf，也就是扩展卡尔曼了，不过由于高度的状态方程是线性的，所以kf和ekf也就差别不大，ekf的算法关键的就是状态转移方程的建立了，不同的状态方程最后得出的效果也会略有区别，当然调参的小技巧可能也会不大一样，不过重点都是Q,R的参数调试。 3.还有一种处理方式就是px4中最开始使用的一种算法，其实也是预测-校验的一种思路，只不过比ekf要简单一些。 kf参数123456789101112131415161718192021222324252627alt_est_kf.set_H(0, 0, 1);alt_est_kf.set_H(1, 2, 1);alt_est_kf.set_P(0, 0, 60);alt_est_kf.set_P(1, 1, 3);alt_est_kf.set_P(2, 2, 0.1f);alt_est_kf.set_Q(0, 0, 0.0000001f);alt_est_kf.set_Q(1, 1, 0.000005f);alt_est_kf.set_Q(2, 2, 0.05f);alt_est_kf.set_R(0, 0, 15000);alt_est_kf.set_R(1, 1, 200);alt_est_kf.set_F(0, 0, 1);alt_est_kf.set_F(0, 1, Ts_q);alt_est_kf.set_F(1, 1, 1);alt_est_kf.set_F(1, 2, Ts_q);alt_est_kf.set_F(2, 2, 1);alt_est_kf.set_I(0, 0, 1);alt_est_kf.set_I(1, 1, 1);alt_est_kf.set_I(2, 2, 1);alt_est_kf.set_X(0, 0, 0);alt_est_kf.set_X(1, 0, 0);alt_est_kf.set_X(2, 0, 0); kf1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071#ifndef __ekf_h#define __ekf_h#include "ss_matrix_q.h"using namespace matrix;/* * M is the number of status, N is the number of observe */template &lt;int M, int N&gt;class ekf&#123; protected: Matrix&lt;float, M, M&gt; P; Matrix&lt;float, M, M&gt; Q; Matrix&lt;float, N, N&gt; R; Matrix&lt;float, M, M&gt; I; Matrix&lt;float, M, M&gt; F; Matrix&lt;float, N, M&gt; H; Matrix&lt;float, M, 1&gt; X; Matrix&lt;float, N, 1&gt; Z; private: Matrix&lt;float, N, N&gt; S; Matrix&lt;float, M, N&gt; K; // Matrix&lt;float, N, 1&gt; Y; // Matrix&lt;float, N, N&gt; S_inv; public: void set_P(int m, int n, float value) &#123; P(m, n) = value; &#125; void set_Q(int m, int n, float value) &#123; Q(m, n) = value; &#125; void set_R(int m, int n, float value) &#123; R(m, n) = value; &#125; void set_I(int m, int n, float value) &#123; I(m, n) = value; &#125; void set_F(int m, int n, float value) &#123; F(m, n) = value; &#125; void set_H(int m, int n, float value) &#123; H(m, n) = value; &#125; void set_X(int m, int n, float value) &#123; X(m, n) = value; &#125; void set_Z(int m, int n, float value) &#123; Z(m, n) = value; &#125; float get_X(int m, int n) &#123; return X(m, n); &#125; void predict(); void correct();&#125;;template &lt;int M, int N&gt;void ekf&lt;M, N&gt;::predict()&#123; X = F * X; P = F * P * F.transpose() + Q;&#125;template &lt;int M, int N&gt;void ekf&lt;M, N&gt;::correct()&#123; S = H * P * H.transpose() + R; K = P * H.transpose() * S.inverse(); X = X + K * (Z - H * X); P = (I - K * H) * P;&#125;#endif 调试 todo:待补充]]></content>
       <categories>
         <category>quadcopter</category>
       </categories>

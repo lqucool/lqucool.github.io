@@ -95,7 +95,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="Let the ideas fly" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="Make the ideas fly" type="application/atom+xml" />
 
 
 
@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="思路 todo   框架 todo   实现 todo">
+<meta name="description" content="思路关于高度控制有两种不同的控制方式：  遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。   notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定">
 <meta name="keywords" content="quadcopter,height control">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高度控制">
 <meta property="og:url" content="https://lqucool.github.io/2017/10/12/高度控制/index.html">
-<meta property="og:site_name" content="Let the ideas fly">
-<meta property="og:description" content="思路 todo   框架 todo   实现 todo">
+<meta property="og:site_name" content="Make the ideas fly">
+<meta property="og:description" content="思路关于高度控制有两种不同的控制方式：  遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。   notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-10-11T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高度控制">
-<meta name="twitter:description" content="思路 todo   框架 todo   实现 todo">
+<meta name="twitter:description" content="思路关于高度控制有两种不同的控制方式：  遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。   notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定">
 
 
 
@@ -173,7 +173,7 @@
         border-left-color: #1E92FB;    /*左边框颜色*/
     }
 </style>
-  <title>高度控制 | Let the ideas fly</title>
+  <title>高度控制 | Make the ideas fly</title>
   
 
 
@@ -203,7 +203,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Let the ideas fly</span>
+        <span class="site-title">Make the ideas fly</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -353,7 +353,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Let the ideas fly">
+      <meta itemprop="name" content="Make the ideas fly">
     </span>
 
     
@@ -445,17 +445,26 @@
       
 
       
-        <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote>
-<p>todo</p>
+        <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>关于高度控制有两种不同的控制方式：</p>
+<ol>
+<li>遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。</li>
+</ol>
+<blockquote>
+<p>notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定当前高度，则飞行器会先上升一段高度，等到实际速度减为0，再下降悬停到锁定的高度，也就是油门回中时的高度。这种方式用户体验并不是很好，会给人一种很不稳的感觉。所以更好的应该是油门回中之后，飞行器应该悬停在实际飞行速度减为0的时候的高度而不是油门回中时的高度。</p>
 </blockquote>
+<a id="more"></a>
+<ol>
+<li>遥控器油门还是代表期望速度，但是把期望速度积分得出期望位置。油门不回中时，期望速度不为0，积分后期望位置在不停更新，油门推进时由位置环和速度环嵌套。油门回中时，期望速度为0，积分后的期望位置不发生改变，飞行器即悬停。</li>
+</ol>
 <hr>
 <h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><blockquote>
-<p>todo</p>
+<p>todo:待补充</p>
 </blockquote>
 <hr>
 <h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><blockquote>
-<p>todo</p>
+<p>todo:待完善</p>
 </blockquote>
+<h4 id="控制目标速度"><a href="#控制目标速度" class="headerlink" title="控制目标速度"></a>控制目标速度</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">float</span> _dst_vel_z;	<span class="comment">// destination velocity</span></div><div class="line"><span class="keyword">float</span> _est_vel_z;	<span class="comment">// estimate velocity</span></div><div class="line"><span class="keyword">float</span> _dst_pos_z;	<span class="comment">// destination position</span></div><div class="line"><span class="keyword">float</span> _est_pos_z;	<span class="comment">// estimate position</span></div><div class="line"><span class="keyword">bool</span> _dst_pos_z_locked;	</div><div class="line"></div><div class="line"><span class="comment">// calc desired pos_z by velocity_z</span></div><div class="line"><span class="keyword">if</span> ( fabsf( _dst_vel_z ) &lt; <span class="number">5</span> ) &#123; <span class="comment">// usr wanna stop</span></div><div class="line">    <span class="keyword">if</span> ( fabsf( _est_vel_z ) &lt; <span class="number">15</span> ) &#123; <span class="comment">// craft is slow enough</span></div><div class="line">        <span class="keyword">if</span> ( !_dst_pos_z_locked ) &#123; <span class="comment">// pos_z not fixed</span></div><div class="line">            _dst_pos_z = _est_pos_z;</div><div class="line">            _dst_pos_z_locked = <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;<span class="keyword">else</span>&#123; <span class="comment">// craft is fast。这里有一个风险：永远控不到较小的速度，位移环就一直不起作用</span></div><div class="line">        <span class="keyword">if</span> ( !_dst_pos_z_locked ) &#123;</div><div class="line">            <span class="comment">// craft is fast, but not fixed now, ctrl speed until slow enough</span></div><div class="line">            _dst_pos_z = _est_pos_z;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//else&#123;</span></div><div class="line">        <span class="comment">// else craft is speed up by extern force( wind, sudden turn-around. etc... )</span></div><div class="line">        <span class="comment">// desired position should still hold( but maybe changed when difference is too large )</span></div><div class="line">        <span class="comment">//&#125;</span></div><div class="line">    &#125;</div><div class="line">&#125;<span class="keyword">else</span>&#123; <span class="comment">// users wanna move</span></div><div class="line">    _dst_pos_z = _est_pos_z;</div><div class="line">    _dst_pos_z_locked = <span class="literal">false</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <hr>
 
       
@@ -680,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">2.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">2.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#控制目标速度"><span class="nav-number">3.1.</span> <span class="nav-text">控制目标速度</span></a></li></ol></li></ol></div>
             
 
           </div>
