@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="这里记录一些关于飞行器设计的一些思路和想法，也算是一些总结，会不定时的更新记录自己的一些想法。">
+<meta name="description" content="这里记录一些关于一些思路和想法，也算是一些总结。">
 <meta name="keywords" content="quadcopter,ideas">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一些想法">
 <meta property="og:url" content="https://lqucool.github.io/2017/10/13/思路/index.html">
 <meta property="og:site_name" content="Make the ideas fly">
-<meta property="og:description" content="这里记录一些关于飞行器设计的一些思路和想法，也算是一些总结，会不定时的更新记录自己的一些想法。">
+<meta property="og:description" content="这里记录一些关于一些思路和想法，也算是一些总结。">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2017-10-12T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些想法">
-<meta name="twitter:description" content="这里记录一些关于飞行器设计的一些思路和想法，也算是一些总结，会不定时的更新记录自己的一些想法。">
+<meta name="twitter:description" content="这里记录一些关于一些思路和想法，也算是一些总结。">
 
 
 
@@ -445,17 +445,15 @@
       
 
       
-        <p>这里记录一些关于飞行器设计的一些思路和想法，也算是一些总结，会不定时的更新记录自己的一些想法。</p>
+        <p>这里记录一些关于一些思路和想法，也算是一些总结。</p>
 <a id="more"></a>
 <h3 id="一些想法"><a href="#一些想法" class="headerlink" title="一些想法"></a>一些想法</h3><p>室内定点定高，室内避障，这些最基础的功能。其实我觉得这更像是一个高集成度的飞控开发平台，集成了高性能飞控平台，测距传感器，光流传感器，避障传感器，通信模组，单双目视觉。这对于开发者来说，单纯的硬件就已经非常有吸引力了。</p>
 <p>飞控算法的话，我肯定是期望朝着商品飞控的目标去做，把飞控的用户体验和飞机的灵活性做好。</p>
 <p>我很喜欢bitcrze团队，能够一起写作专心做喜欢的事，做一些很酷的东西出来，很希望以后有机会能够朝着他们的方向去做。</p>
-<h3 id="室内定位方式"><a href="#室内定位方式" class="headerlink" title="室内定位方式"></a>室内定位方式</h3><ol>
-<li>双目或者目：做视觉里程计或者SLAM</li>
-<li>UWB位置融合光流传感器，我个人很想尝试这种方式，一直觉得这样应该也可以做出不错的效果</li>
-<li>mocap</li>
-</ol>
-<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><ol>
+<h3 id="室内定位方式"><a href="#室内定位方式" class="headerlink" title="室内定位方式"></a>室内定位方式</h3><pre><code>1. 双目或者目：做视觉里程计或者SLAM
+2. UWB位置融合光流传感器，我个人很想尝试这种方式，一直觉得这样应该也可以做出不错的效果
+3. mocap
+</code></pre><h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><ol>
 <li>传感器减震方式，要不要独立imu模块，单独做减震</li>
 <li>气压计的处理</li>
 </ol>
