@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Make the ideas fly">
 <meta property="og:description" content="思路关于高度控制有两种不同的控制方式：  遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。   notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-10-11T16:00:00.000Z">
+<meta property="og:updated_time" content="2017-10-21T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="高度控制">
 <meta name="twitter:description" content="思路关于高度控制有两种不同的控制方式：  遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。   notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定">
@@ -389,8 +389,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2017-10-12T00:00:00+08:00">
-                2017-10-12
+              <time title="Post modified" itemprop="dateModified" datetime="2017-10-22T00:00:00+08:00">
+                2017-10-22
               </time>
             
           </span>
@@ -457,6 +457,11 @@
 <li>遥控器油门还是代表期望速度，但是把期望速度积分得出期望位置。油门不回中时，期望速度不为0，积分后期望位置在不停更新，油门推进时由位置环和速度环嵌套。油门回中时，期望速度为0，积分后的期望位置不发生改变，飞行器即悬停。</li>
 </ol>
 <p>其实两种方式不同的地方就是第一种推油门的时候是控的目标速度，只有速度环，第二种推油门的时候就是控的目标位置，位置环和速度环嵌套。</p>
+<p>想要获得比较好的效果，问题还是有很多的：</p>
+<ol>
+<li>高度的PID控制器一般都有三环，位置环-&gt;速度环-&gt;加速度环，PID想要比较好的效果需要有几点注意的地方，比如系统的延时，数据的更新频率，以及数据的精度。</li>
+<li>激光测距的更新频率比较慢，一般就20Hz~100Hz之间，要想比较好的效果的话这种控制频率就有点慢了，所以激光的数据还是要和加计的数据进行融合，融合了加计之后可以提高一些响应速度，但是肯定也会引入一定的噪声。所以在融合的时候要在响应速度和数据的波动上做一些处理，达到最好效果。</li>
+</ol>
 <hr>
 <h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><blockquote>
 <p>todo:待补充</p>
@@ -534,8 +539,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/12/位置控制-px4/" rel="next" title="位置控制-px4">
-                <i class="fa fa-chevron-left"></i> 位置控制-px4
+              <a href="/2017/10/09/Beaglebone 编译部署/" rel="next" title="BeagleBone Blue 编译部署">
+                <i class="fa fa-chevron-left"></i> BeagleBone Blue 编译部署
               </a>
             
           </div>
@@ -544,8 +549,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/13/思路/" rel="prev" title="一些想法">
-                一些想法 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/10/12/位置控制-px4/" rel="prev" title="位置控制-px4">
+                位置控制-px4 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -626,7 +631,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -648,7 +653,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

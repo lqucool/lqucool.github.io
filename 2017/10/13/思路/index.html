@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="Make the ideas fly">
 <meta property="og:description" content="这里记录一些关于一些思路和想法，也算是一些总结。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-10-12T16:00:00.000Z">
+<meta property="og:updated_time" content="2017-10-25T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一些想法">
 <meta name="twitter:description" content="这里记录一些关于一些思路和想法，也算是一些总结。">
@@ -389,8 +389,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2017-10-13T00:00:00+08:00">
-                2017-10-13
+              <time title="Post modified" itemprop="dateModified" datetime="2017-10-26T00:00:00+08:00">
+                2017-10-26
               </time>
             
           </span>
@@ -450,10 +450,12 @@
 <h3 id="一些想法"><a href="#一些想法" class="headerlink" title="一些想法"></a>一些想法</h3><p>室内定点定高，室内避障，这些最基础的功能。其实我觉得这更像是一个高集成度的飞控开发平台，集成了高性能飞控平台，测距传感器，光流传感器，避障传感器，通信模组，单双目视觉。这对于开发者来说，单纯的硬件就已经非常有吸引力了。</p>
 <p>飞控算法的话，我肯定是期望朝着商品飞控的目标去做，把飞控的用户体验和飞机的灵活性做好。</p>
 <p>我很喜欢bitcrze团队，能够一起写作专心做喜欢的事，做一些很酷的东西出来，很希望以后有机会能够朝着他们的方向去做。</p>
-<h3 id="室内定位方式"><a href="#室内定位方式" class="headerlink" title="室内定位方式"></a>室内定位方式</h3><pre><code>1. 双目或者目：做视觉里程计或者SLAM
-2. UWB位置融合光流传感器，我个人很想尝试这种方式，一直觉得这样应该也可以做出不错的效果
-3. mocap
-</code></pre><h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><ol>
+<h3 id="室内定位方式"><a href="#室内定位方式" class="headerlink" title="室内定位方式"></a>室内定位方式</h3><ol>
+<li>双目或者目：做视觉里程计或者SLAM</li>
+<li>UWB位置融合光流传感器，我个人很想尝试这种方式，一直觉得这样应该也可以做出不错的效果</li>
+<li>mocap</li>
+</ol>
+<h3 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h3><ol>
 <li>传感器减震方式，要不要独立imu模块，单独做减震</li>
 <li>气压计的处理</li>
 </ol>
@@ -550,6 +552,16 @@
 <p>2.4G数传或者wifi模组</p>
 </li>
 </ul>
+<blockquote>
+<p>2017.10.26</p>
+<p>最近想了想，觉得室内飞行还是小飞机比较好些，既方便调试又方便飞行，特别是现在住的地方也不大，所以一直都在挑小飞机的硬件。</p>
+<p>130轴距是个不错的选择，采用1106电机，6000KV，3寸碳桨，15A四合一电调，飞控自己做成30mm*30mm，再加上激光测距和光流。</p>
+<p>1106电机 6.6g一个，四个26.4g，3020桨的时候单个电机能到300g以上最大推力，很暴力</p>
+<p>激光测距只有5~6g中，体积也很小</p>
+<p>光流体积20mm*20mm，也可以自己做，等飞控做稳定了还是想自己做光流和TOF模块</p>
+<p>电池可以用2S或者3S的520mah，14500电池看起来也可以，就是不知道重量合适不合适</p>
+<p>等发了工资要找机会整一套，还有好多工具需要啊，风枪、焊台、调试夹、放大镜、电子秤。。。还需要一套螺丝刀，之前的这些装备毕业的时候全都送人了</p>
+</blockquote>
 
       
     </div>
@@ -617,8 +629,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/12/高度控制/" rel="next" title="高度控制">
-                <i class="fa fa-chevron-left"></i> 高度控制
+              <a href="/2017/10/12/位置控制-px4/" rel="next" title="位置控制-px4">
+                <i class="fa fa-chevron-left"></i> 位置控制-px4
               </a>
             
           </div>
@@ -626,6 +638,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/22/硬件/" rel="prev" title="硬件">
+                硬件 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -705,7 +721,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -727,7 +743,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
