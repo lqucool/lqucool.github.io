@@ -17,6 +17,36 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>关于工作</title>
+    <link href="https://lqucool.github.io/2017/10/22/%E5%85%B3%E4%BA%8E%E5%B7%A5%E4%BD%9C/"/>
+    <id>https://lqucool.github.io/2017/10/22/关于工作/</id>
+    <published>2017-10-21T16:00:00.000Z</published>
+    <updated>2017-10-21T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>KF融合气压计和加计</p><p>移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。</p><p>malab生成IIR滤波器参数，对原始气压计进行了初步滤波。</p></li><li><p>互补融合激光测距和加计<br>采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。</p></li><li>激光测距的数据进行了倾斜角补偿</li><li>油门摇杆控速度</li><li>高度环串级PID</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;KF融合气压计和加计&lt;/p&gt;
+&lt;p&gt;移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。&lt;/p&gt;
+&lt;p&gt;malab生成IIR滤波器参数，对原始气压计进行了初步滤波。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;互补
+      
+    
+    </summary>
+    
+      <category term="work" scheme="https://lqucool.github.io/categories/work/"/>
+    
+    
+      <category term="work" scheme="https://lqucool.github.io/tags/work/"/>
+    
+  </entry>
+  
+  <entry>
     <title>硬件</title>
     <link href="https://lqucool.github.io/2017/10/22/%E7%A1%AC%E4%BB%B6/"/>
     <id>https://lqucool.github.io/2017/10/22/硬件/</id>

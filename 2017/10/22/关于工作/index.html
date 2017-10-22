@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="quadcopter,position control," />
+  <meta name="keywords" content="work," />
 
 
 
@@ -107,18 +107,18 @@
 
 
 
-<meta name="description" content="主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件 未完待续！">
-<meta name="keywords" content="quadcopter,position control">
+<meta name="description" content="KF融合气压计和加计 移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。 malab生成IIR滤波器参数，对原始气压计进行了初步滤波。  互补融合激光测距和加计采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。  激光测距的数据进行了倾斜角补偿 油门">
+<meta name="keywords" content="work">
 <meta property="og:type" content="article">
-<meta property="og:title" content="位置控制-px4">
-<meta property="og:url" content="https://lqucool.github.io/2017/10/12/位置控制-px4/index.html">
+<meta property="og:title" content="关于工作">
+<meta property="og:url" content="https://lqucool.github.io/2017/10/22/关于工作/index.html">
 <meta property="og:site_name" content="Make the ideas fly">
-<meta property="og:description" content="主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件 未完待续！">
+<meta property="og:description" content="KF融合气压计和加计 移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。 malab生成IIR滤波器参数，对原始气压计进行了初步滤波。  互补融合激光测距和加计采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。  激光测距的数据进行了倾斜角补偿 油门">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-10-11T16:00:00.000Z">
+<meta property="og:updated_time" content="2017-10-21T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="位置控制-px4">
-<meta name="twitter:description" content="主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件 未完待续！">
+<meta name="twitter:title" content="关于工作">
+<meta name="twitter:description" content="KF融合气压计和加计 移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。 malab生成IIR滤波器参数，对原始气压计进行了初步滤波。  互补融合激光测距和加计采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。  激光测距的数据进行了倾斜角补偿 油门">
 
 
 
@@ -148,7 +148,7 @@
 
 
 
-  <link rel="canonical" href="https://lqucool.github.io/2017/10/12/位置控制-px4/"/>
+  <link rel="canonical" href="https://lqucool.github.io/2017/10/22/关于工作/"/>
 
 
 
@@ -173,7 +173,7 @@
         border-left-color: #1E92FB;    /*左边框颜色*/
     }
 </style>
-  <title>位置控制-px4 | Make the ideas fly</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>关于工作 | Make the ideas fly</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -344,7 +344,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lqucool.github.io/2017/10/12/位置控制-px4/">
+    <link itemprop="mainEntityOfPage" href="https://lqucool.github.io/2017/10/22/关于工作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Qu.L">
@@ -361,7 +361,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">位置控制-px4</h1>
+          <h1 class="post-title" itemprop="name headline">关于工作</h1>
         
 
         <div class="post-meta">
@@ -373,8 +373,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-12T00:00:00+08:00">
-                2017-10-12
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-22T00:00:00+08:00">
+                2017-10-22
               </time>
             
 
@@ -389,8 +389,8 @@
               
                 <span class="post-meta-item-text">Post modified&#58;</span>
               
-              <time title="Post modified" itemprop="dateModified" datetime="2017-10-12T00:00:00+08:00">
-                2017-10-12
+              <time title="Post modified" itemprop="dateModified" datetime="2017-10-22T00:00:00+08:00">
+                2017-10-22
               </time>
             
           </span>
@@ -408,8 +408,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/quadcopter/" itemprop="url" rel="index">
-                    <span itemprop="name">quadcopter</span>
+                  <a href="/categories/work/" itemprop="url" rel="index">
+                    <span itemprop="name">work</span>
                   </a>
                 </span>
 
@@ -445,21 +445,17 @@
       
 
       
-        <p>主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件</p>
-<p>未完待续！</p>
-<a id="more"></a>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote>
-<p>todo</p>
-</blockquote>
-<hr>
-<h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><blockquote>
-<p>todo</p>
-</blockquote>
-<hr>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><blockquote>
-<p>todo</p>
-</blockquote>
-<hr>
+        <ol>
+<li><p>KF融合气压计和加计</p>
+<p>移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。</p>
+<p>malab生成IIR滤波器参数，对原始气压计进行了初步滤波。</p>
+</li>
+<li><p>互补融合激光测距和加计<br>采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。</p>
+</li>
+<li>激光测距的数据进行了倾斜角补偿</li>
+<li>油门摇杆控速度</li>
+<li>高度环串级PID</li>
+</ol>
 
       
     </div>
@@ -480,7 +476,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="https://lqucool.github.io/2017/10/12/位置控制-px4/" title="位置控制-px4">https://lqucool.github.io/2017/10/12/位置控制-px4/</a>
+    <a href="https://lqucool.github.io/2017/10/22/关于工作/" title="关于工作">https://lqucool.github.io/2017/10/22/关于工作/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -512,9 +508,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/quadcopter/" rel="tag"><i class="fa fa-tag"></i> quadcopter</a>
-          
-            <a href="/tags/position-control/" rel="tag"><i class="fa fa-tag"></i> position control</a>
+            <a href="/tags/work/" rel="tag"><i class="fa fa-tag"></i> work</a>
           
         </div>
       
@@ -527,8 +521,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/12/高度控制/" rel="next" title="高度控制">
-                <i class="fa fa-chevron-left"></i> 高度控制
+              <a href="/2017/10/22/硬件/" rel="next" title="硬件">
+                <i class="fa fa-chevron-left"></i> 硬件
               </a>
             
           </div>
@@ -536,10 +530,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/13/思路/" rel="prev" title="一些想法">
-                一些想法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -591,17 +581,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -673,22 +654,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架"><span class="nav-number">2.</span> <span class="nav-text">框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

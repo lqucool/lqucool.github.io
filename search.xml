@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[关于工作]]></title>
+    <url>%2F2017%2F10%2F22%2F%E5%85%B3%E4%BA%8E%E5%B7%A5%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[KF融合气压计和加计 移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。 malab生成IIR滤波器参数，对原始气压计进行了初步滤波。 互补融合激光测距和加计采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。 激光测距的数据进行了倾斜角补偿 油门摇杆控速度 高度环串级PID]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>work</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[硬件]]></title>
     <url>%2F2017%2F10%2F22%2F%E7%A1%AC%E4%BB%B6%2F</url>
     <content type="text"><![CDATA[最近一周一直在做高度控制的算法，每天加班都很晚，晚上也很少有时间做些东西，不过还是趁着这个周末的时间完成了大部分的硬件设计。 硬件的设计很多还是参考了px4的硬件，也很想尝试下能不能兼容px4固件。 todo: 后面有时间在详细整理硬件电路的设计。]]></content>
