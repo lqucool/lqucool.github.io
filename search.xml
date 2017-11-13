@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[关于工作]]></title>
-    <url>%2F2017%2F10%2F22%2F%E5%85%B3%E4%BA%8E%E5%B7%A5%E4%BD%9C%2F</url>
-    <content type="text"><![CDATA[KF融合气压计和加计 移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。 malab生成IIR滤波器参数，对原始气压计进行了初步滤波。 互补融合激光测距和加计采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。 激光测距的数据进行了倾斜角补偿 油门摇杆控速度 高度环串级PID]]></content>
+    <title><![CDATA[加计震动滤波]]></title>
+    <url>%2F2017%2F11%2F13%2F%E5%8A%A0%E8%AE%A1%E9%9C%87%E5%8A%A8%E6%BB%A4%E6%B3%A2%2F</url>
+    <content type="text"><![CDATA[采集加计数据，400Hz保存到SD卡 Matlab分析采集到的数据的频谱，确定滤波器参数 生成IIR滤波器参数 C++实现并在飞控平台上测试 采集飞控上滤波后的数据并和Matlab上的滤波效果对比 Matlab设计IIR滤波器 注：Matlab生成IIR滤波器参数，飞控上使用C++实现，实现效果和Matlab设计效果一致。 ​ 截止频率不一定合适，后面单独会对电机震动频率做分析，调整截止频率。 生成参数 滤波前后频谱 滤波前后曲线 飞控上的滤波效果和matlab上滤波的效果是一致的，证明滤波算法没问题。 飞控上滤波后的数据和Matlab滤波后曲线 飞控上滤波后的数据和Matlab滤波后频谱 ​ 电机震动对加计影响 电机震动引起的震动频率在20Hz ~ 30Hz之间，设置截止频率为10Hz，也不一定每一架飞机的震动频率都相同，具体测试吧。 Matlab分析数据曲线和数据频谱 滤波后效果 Matlab123456789101112131415161718192021222324252627282930313233343536373839% ············电机震动分析············% 截取起飞前的一段数据v4 = v4(9200:10000);plot(v4);hold on;% IIRFs=400; % 采样率 Hzn=2; % 阶数 Fp=10; % 通带截止频率 HzWn=Fp*2/Fs; [Bb,Ba]=butter(n,Wn,'low') % 调用MATLAB butter函数快速设计滤波器 [BH,BW]=freqz(Bb,Ba);Bf=filter(Bb,Ba,v4);plot(Bf);legend('滤波前','滤波后');title('电机转动时加计数据'); figure;% fft 滤波前n = size(v4,1)-1;Y = fft(v4, n);Ayy = (abs(Y));Ayy = Ayy / (n / 2);Ayy(1) = Ayy(1) / 2;F=(1:n - 1)*Fs/n;plot(F(1:n/2),Ayy(1:n/2));hold on;% fft 滤波后Y = fft(Bf, n);Ayy = (abs(Y));Ayy = Ayy / (n / 2);Ayy(1) = Ayy(1) / 2;F=(1:n - 1)*Fs/n;plot(F(1:n/2),Ayy(1:n/2));legend('滤波前','滤波后');title('电机转动时加计数据频谱'); % ············电机震动分析············ C - IIR 一种比较简单的实现函数，滤波器的参数只能有Matlab生成了，但是其实滤波器的参数也是可以根据频率直接用C语言生成参数的，APM飞控里的 LowPassFilter2p.cpp 有实现的方法，可以移植一下。 12345678910111213141516171819202122232425262728293031323334353637#define IIR_ORDER 2 // orderdouble InPut_IIR[IIR_ORDER + 1] = &#123;0&#125;;double OutPut_IIR[IIR_ORDER + 1] = &#123;0&#125;;// Fs:400Hz Fp:10Hzdouble b_IIR[IIR_ORDER + 1] = &#123;0.000027f, 0.000054f, 0.000027f&#125;; //bdouble a_IIR[IIR_ORDER + 1] = &#123;1.000000f, -1.985190f, 0.985299f&#125;; //adouble IIR_I_Filter(double InData)&#123; double z1, z2; short i; double OutData; short na = IIR_ORDER + 1; short nb = IIR_ORDER + 1; for (i = nb - 1; i &gt; 0; i--) &#123; InPut_IIR[i] = InPut_IIR[i - 1]; &#125; InPut_IIR[0] = InData; for (z1 = 0, i = 0; i &lt; nb; i++) &#123; z1 += InPut_IIR[i] * b_IIR[i]; &#125; for (i = na - 1; i &gt; 0; i--) &#123; OutPut_IIR[i] = OutPut_IIR[i - 1]; &#125; for (z2 = 0, i = 1; i &lt; na; i++) &#123; z2 += OutPut_IIR[i] * a_IIR[i]; &#125; OutPut_IIR[0] = z1 - z2; OutData = OutPut_IIR[0]; return OutData;&#125;]]></content>
       <categories>
-        <category>work</category>
+        <category>quadcopter</category>
       </categories>
       <tags>
-        <tag>work</tag>
+        <tag>quadcopter</tag>
+        <tag>height control</tag>
       </tags>
   </entry>
   <entry>
@@ -21,6 +22,17 @@
       <tags>
         <tag>quadcopter</tag>
         <tag>hardware</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[关于工作]]></title>
+    <url>%2F2017%2F10%2F22%2F%E5%85%B3%E4%BA%8E%E5%B7%A5%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[KF融合气压计和加计 移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。 malab生成IIR滤波器参数，对原始气压计进行了初步滤波。 互补融合激光测距和加计采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。 激光测距的数据进行了倾斜角补偿 油门摇杆控速度 高度环串级PID]]></content>
+      <categories>
+        <category>work</category>
+      </categories>
+      <tags>
+        <tag>work</tag>
       </tags>
   </entry>
   <entry>

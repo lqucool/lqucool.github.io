@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lqucool.github.io/"/>
-  <updated>2017-10-21T16:00:00.000Z</updated>
+  <updated>2017-11-12T16:00:00.000Z</updated>
   <id>https://lqucool.github.io/</id>
   
   <author>
@@ -17,32 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>关于工作</title>
-    <link href="https://lqucool.github.io/2017/10/22/%E5%85%B3%E4%BA%8E%E5%B7%A5%E4%BD%9C/"/>
-    <id>https://lqucool.github.io/2017/10/22/关于工作/</id>
-    <published>2017-10-21T16:00:00.000Z</published>
-    <updated>2017-10-21T16:00:00.000Z</updated>
+    <title>加计震动滤波</title>
+    <link href="https://lqucool.github.io/2017/11/13/%E5%8A%A0%E8%AE%A1%E9%9C%87%E5%8A%A8%E6%BB%A4%E6%B3%A2/"/>
+    <id>https://lqucool.github.io/2017/11/13/加计震动滤波/</id>
+    <published>2017-11-12T16:00:00.000Z</published>
+    <updated>2017-11-12T16:00:00.000Z</updated>
     
-    <content type="html"><![CDATA[<ol><li><p>KF融合气压计和加计</p><p>移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。</p><p>malab生成IIR滤波器参数，对原始气压计进行了初步滤波。</p></li><li><p>互补融合激光测距和加计<br>采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。</p></li><li>激光测距的数据进行了倾斜角补偿</li><li>油门摇杆控速度</li><li>高度环串级PID</li></ol>]]></content>
+    <content type="html"><![CDATA[<blockquote><ol><li>采集加计数据，400Hz保存到SD卡</li><li>Matlab分析采集到的数据的频谱，确定滤波器参数</li><li>生成IIR滤波器参数</li><li>C++实现并在飞控平台上测试</li><li>采集飞控上滤波后的数据并和Matlab上的滤波效果对比</li></ol></blockquote><h3 id="Matlab设计IIR滤波器"><a href="#Matlab设计IIR滤波器" class="headerlink" title="Matlab设计IIR滤波器"></a>Matlab设计IIR滤波器</h3><blockquote><p>注：Matlab生成IIR滤波器参数，飞控上使用C++实现，实现效果和Matlab设计效果一致。</p><p>​    截止频率不一定合适，后面单独会对电机震动频率做分析，调整截止频率。</p></blockquote><ul><li><p>生成参数<br><img src="http://owsesa4hj.bkt.clouddn.com/IIR%E6%BB%A4%E6%B3%A2%E5%99%A8.png" alt="IIR滤波器"></p><p><img src="http://owsesa4hj.bkt.clouddn.com/FDATool2.png" alt="FDATool2"><img src="http://owsesa4hj.bkt.clouddn.com/FDATool.png" alt="FDATool"></p></li><li><p>滤波前后频谱<br><img src="http://owsesa4hj.bkt.clouddn.com/%E6%BB%A4%E6%B3%A2%E5%89%8D%E5%90%8E%E9%A2%91%E8%B0%B1.png" alt="滤波前后频谱"></p></li><li><p>滤波前后曲线<br><img src="http://owsesa4hj.bkt.clouddn.com/%E6%BB%A4%E6%B3%A2%E5%89%8D%E5%90%8E%E6%9B%B2%E7%BA%BF.png" alt="滤波前后曲线"></p><blockquote><p>飞控上的滤波效果和matlab上滤波的效果是一致的，证明滤波算法没问题。</p></blockquote></li><li><p>飞控上滤波后的数据和Matlab滤波后曲线<br><img src="http://owsesa4hj.bkt.clouddn.com/%E9%A3%9E%E6%8E%A7%E5%92%8CMatlab%E6%BB%A4%E6%B3%A2%E5%90%8E%E5%AF%B9%E6%AF%94.png" alt="飞控和Matlab滤波后对比"></p></li><li><p>飞控上滤波后的数据和Matlab滤波后频谱<br><img src="http://owsesa4hj.bkt.clouddn.com/%E9%A3%9E%E6%8E%A7%E5%92%8CMatlab%E6%BB%A4%E6%B3%A2%E5%90%8E%E9%A2%91%E8%B0%B1%E5%AF%B9%E6%AF%94.png" alt="飞控和Matlab滤波后频谱对比"></p><p>​</p></li></ul><h3 id="电机震动对加计影响"><a href="#电机震动对加计影响" class="headerlink" title="电机震动对加计影响"></a>电机震动对加计影响</h3><blockquote><p>电机震动引起的震动频率在20Hz ~ 30Hz之间，设置截止频率为10Hz，也不一定每一架飞机的震动频率都相同，具体测试吧。</p></blockquote><ul><li><p>Matlab分析数据曲线和数据频谱<br><img src="http://owsesa4hj.bkt.clouddn.com/%E7%94%B5%E6%9C%BA%E9%9C%87%E5%8A%A8%E5%8A%A0%E8%AE%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90.png" alt="电机震动加计数据分析"></p></li><li><p>滤波后效果</p><p><img src="http://owsesa4hj.bkt.clouddn.com/%E9%9C%87%E5%8A%A8%E9%A2%91%E8%B0%B1.png" alt="震动频谱"></p><p><img src="http://owsesa4hj.bkt.clouddn.com/%E9%9C%87%E5%8A%A8%E6%9B%B2%E7%BA%BF.png" alt="震动曲线"></p></li></ul><h3 id="Matlab"><a href="#Matlab" class="headerlink" title="Matlab"></a>Matlab</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">% ············电机震动分析············</span></div><div class="line"><span class="comment">% 截取起飞前的一段数据</span></div><div class="line">v4 = v4(<span class="number">9200</span>:<span class="number">10000</span>);</div><div class="line">plot(v4);</div><div class="line">hold on;</div><div class="line"></div><div class="line"><span class="comment">% IIR</span></div><div class="line">Fs=<span class="number">400</span>;                         <span class="comment">% 采样率     Hz</span></div><div class="line">n=<span class="number">2</span>;                            <span class="comment">% 阶数  </span></div><div class="line">Fp=<span class="number">10</span>;                          <span class="comment">% 通带截止频率    Hz</span></div><div class="line">Wn=Fp*<span class="number">2</span>/Fs;  </div><div class="line">[Bb,Ba]=butter(n,Wn,<span class="string">'low'</span>)     <span class="comment">% 调用MATLAB butter函数快速设计滤波器  </span></div><div class="line">[BH,BW]=freqz(Bb,Ba);</div><div class="line">Bf=filter(Bb,Ba,v4);</div><div class="line">plot(Bf);</div><div class="line">legend(<span class="string">'滤波前'</span>,<span class="string">'滤波后'</span>);</div><div class="line">title(<span class="string">'电机转动时加计数据'</span>); </div><div class="line"></div><div class="line">figure;</div><div class="line"><span class="comment">% fft 滤波前</span></div><div class="line">n = <span class="built_in">size</span>(v4,<span class="number">1</span>)<span class="number">-1</span>;</div><div class="line">Y  = fft(v4, n);</div><div class="line">Ayy = (<span class="built_in">abs</span>(Y));</div><div class="line">Ayy = Ayy / (n / <span class="number">2</span>);</div><div class="line">Ayy(<span class="number">1</span>) = Ayy(<span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">F=(<span class="number">1</span>:n - <span class="number">1</span>)*Fs/n;</div><div class="line">plot(F(<span class="number">1</span>:n/<span class="number">2</span>),Ayy(<span class="number">1</span>:n/<span class="number">2</span>));</div><div class="line">hold on;</div><div class="line"></div><div class="line"><span class="comment">% fft 滤波后</span></div><div class="line">Y  = fft(Bf, n);</div><div class="line">Ayy = (<span class="built_in">abs</span>(Y));</div><div class="line">Ayy = Ayy / (n / <span class="number">2</span>);</div><div class="line">Ayy(<span class="number">1</span>) = Ayy(<span class="number">1</span>) / <span class="number">2</span>;</div><div class="line">F=(<span class="number">1</span>:n - <span class="number">1</span>)*Fs/n;</div><div class="line">plot(F(<span class="number">1</span>:n/<span class="number">2</span>),Ayy(<span class="number">1</span>:n/<span class="number">2</span>));</div><div class="line">legend(<span class="string">'滤波前'</span>,<span class="string">'滤波后'</span>);</div><div class="line">title(<span class="string">'电机转动时加计数据频谱'</span>); </div><div class="line"><span class="comment">% ············电机震动分析············</span></div></pre></td></tr></table></figure><h3 id="C-IIR"><a href="#C-IIR" class="headerlink" title="C - IIR"></a>C - IIR</h3><blockquote><p>一种比较简单的实现函数，滤波器的参数只能有Matlab生成了，但是其实滤波器的参数也是可以根据频率直接用C语言生成参数的，APM飞控里的 <code>LowPassFilter2p.cpp</code> 有实现的方法，可以移植一下。</p></blockquote><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">define</span> IIR_ORDER 2 <span class="comment">// order</span></span></div><div class="line"><span class="keyword">double</span> InPut_IIR[IIR_ORDER + <span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line"><span class="keyword">double</span> OutPut_IIR[IIR_ORDER + <span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;</div><div class="line"></div><div class="line"><span class="comment">// Fs:400Hz Fp:10Hz</span></div><div class="line"><span class="keyword">double</span> b_IIR[IIR_ORDER + <span class="number">1</span>] = &#123;<span class="number">0.000027f</span>, <span class="number">0.000054f</span>, <span class="number">0.000027f</span>&#125;;  <span class="comment">//b</span></div><div class="line"><span class="keyword">double</span> a_IIR[IIR_ORDER + <span class="number">1</span>] = &#123;<span class="number">1.000000f</span>, <span class="number">-1.985190f</span>, <span class="number">0.985299f</span>&#125;; <span class="comment">//a</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">double</span> <span class="title">IIR_I_Filter</span><span class="params">(<span class="keyword">double</span> InData)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="keyword">double</span> z1, z2;</div><div class="line">    <span class="keyword">short</span> i;</div><div class="line">    <span class="keyword">double</span> OutData;</div><div class="line">    <span class="keyword">short</span> na = IIR_ORDER + <span class="number">1</span>;</div><div class="line">    <span class="keyword">short</span> nb = IIR_ORDER + <span class="number">1</span>;</div><div class="line">    <span class="keyword">for</span> (i = nb - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--)</div><div class="line">    &#123;</div><div class="line">        InPut_IIR[i] = InPut_IIR[i - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">    InPut_IIR[<span class="number">0</span>] = InData;</div><div class="line">    <span class="keyword">for</span> (z1 = <span class="number">0</span>, i = <span class="number">0</span>; i &lt; nb; i++)</div><div class="line">    &#123;</div><div class="line">        z1 += InPut_IIR[i] * b_IIR[i];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (i = na - <span class="number">1</span>; i &gt; <span class="number">0</span>; i--)</div><div class="line">    &#123;</div><div class="line">        OutPut_IIR[i] = OutPut_IIR[i - <span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (z2 = <span class="number">0</span>, i = <span class="number">1</span>; i &lt; na; i++)</div><div class="line">    &#123;</div><div class="line">        z2 += OutPut_IIR[i] * a_IIR[i];</div><div class="line">    &#125;</div><div class="line">    OutPut_IIR[<span class="number">0</span>] = z1 - z2;</div><div class="line">    OutData = OutPut_IIR[<span class="number">0</span>];</div><div class="line">    <span class="keyword">return</span> OutData;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;KF融合气压计和加计&lt;/p&gt;
-&lt;p&gt;移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。&lt;/p&gt;
-&lt;p&gt;malab生成IIR滤波器参数，对原始气压计进行了初步滤波。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;互补
+        &lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;采集加计数据，400Hz保存到SD卡&lt;/li&gt;
+&lt;li&gt;Matlab分析采集到的数据的频谱，确定滤波器参数&lt;/li&gt;
+&lt;li&gt;生成IIR滤波器参数&lt;/li&gt;
+&lt;li&gt;C++实现并在飞控平台上测试&lt;/li&gt;
+&lt;li&gt;采集飞控上滤波后的数据
       
     
     </summary>
     
-      <category term="work" scheme="https://lqucool.github.io/categories/work/"/>
+      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
     
     
-      <category term="work" scheme="https://lqucool.github.io/tags/work/"/>
+      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
+    
+      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
     
   </entry>
   
@@ -73,6 +76,36 @@
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
       <category term="hardware" scheme="https://lqucool.github.io/tags/hardware/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于工作</title>
+    <link href="https://lqucool.github.io/2017/10/22/%E5%85%B3%E4%BA%8E%E5%B7%A5%E4%BD%9C/"/>
+    <id>https://lqucool.github.io/2017/10/22/关于工作/</id>
+    <published>2017-10-21T16:00:00.000Z</published>
+    <updated>2017-10-21T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li><p>KF融合气压计和加计</p><p>移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。</p><p>malab生成IIR滤波器参数，对原始气压计进行了初步滤波。</p></li><li><p>互补融合激光测距和加计<br>采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1cm，效果不错，但是融合之后的数据略有波动。有待换成KF测试。</p></li><li>激光测距的数据进行了倾斜角补偿</li><li>油门摇杆控速度</li><li>高度环串级PID</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;KF融合气压计和加计&lt;/p&gt;
+&lt;p&gt;移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。&lt;/p&gt;
+&lt;p&gt;malab生成IIR滤波器参数，对原始气压计进行了初步滤波。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;互补
+      
+    
+    </summary>
+    
+      <category term="work" scheme="https://lqucool.github.io/categories/work/"/>
+    
+    
+      <category term="work" scheme="https://lqucool.github.io/tags/work/"/>
     
   </entry>
   
