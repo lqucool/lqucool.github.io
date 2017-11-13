@@ -134,6 +134,31 @@
   </entry>
   
   <entry>
+    <title>位置控制-px4</title>
+    <link href="https://lqucool.github.io/2017/10/12/%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6-px4/"/>
+    <id>https://lqucool.github.io/2017/10/12/位置控制-px4/</id>
+    <published>2017-10-11T16:00:00.000Z</published>
+    <updated>2017-10-11T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件</p><p>未完待续！</p><a id="more"></a><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote><p>todo</p></blockquote><hr><h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><blockquote><p>todo</p></blockquote><hr><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><blockquote><p>todo</p></blockquote><hr>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件&lt;/p&gt;
+&lt;p&gt;未完待续！&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
+    
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
+    
+      <category term="position control" scheme="https://lqucool.github.io/tags/position-control/"/>
+    
+  </entry>
+  
+  <entry>
     <title>高度控制</title>
     <link href="https://lqucool.github.io/2017/10/12/%E9%AB%98%E5%BA%A6%E6%8E%A7%E5%88%B6/"/>
     <id>https://lqucool.github.io/2017/10/12/高度控制/</id>
@@ -160,31 +185,6 @@
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
       <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>位置控制-px4</title>
-    <link href="https://lqucool.github.io/2017/10/12/%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6-px4/"/>
-    <id>https://lqucool.github.io/2017/10/12/位置控制-px4/</id>
-    <published>2017-10-11T16:00:00.000Z</published>
-    <updated>2017-10-11T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件</p><p>未完待续！</p><a id="more"></a><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><blockquote><p>todo</p></blockquote><hr><h3 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h3><blockquote><p>todo</p></blockquote><hr><h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><blockquote><p>todo</p></blockquote><hr>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件&lt;/p&gt;
-&lt;p&gt;未完待续！&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
-    
-    
-      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
-    
-      <category term="position control" scheme="https://lqucool.github.io/tags/position-control/"/>
     
   </entry>
   
