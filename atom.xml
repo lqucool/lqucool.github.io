@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lqucool.github.io/"/>
-  <updated>2017-11-12T16:00:00.000Z</updated>
+  <updated>2017-11-21T16:00:00.000Z</updated>
   <id>https://lqucool.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高度切换</title>
+    <link href="https://lqucool.github.io/2017/11/22/%E9%AB%98%E5%BA%A6%E5%88%87%E6%8D%A2/"/>
+    <id>https://lqucool.github.io/2017/11/22/高度切换/</id>
+    <published>2017-11-21T16:00:00.000Z</published>
+    <updated>2017-11-21T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>高度控制时有两种模式，一种是地形跟随，另外一种就是地形突变时，飞行器高度不跟随地形改变。</p><p>地形跟随模式就直接用对地测距数据融合加计就可以了。</p><p>第二种模式的话就需要在测距数据发生突变的时候，切换到气压高度。但是切换的时候要进行数据对齐，并且在测距数据一定时间稳定的时候再切换回测距的高度。油门发生改变的时候，是直接对垂直方向进行控速的，所以这时候可以直接把高度和测距的高度对齐。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">alt_check_valid</span><span class="params">(<span class="keyword">float</span> alt_laser, <span class="keyword">float</span> alt_baro, <span class="keyword">float</span> vel_laser, <span class="keyword">float</span> vel_baro)</span></span></div><div class="line"><span class="function"></span>&#123;</div><div class="line">    <span class="comment">/*  state:  转换状态</span></div><div class="line"><span class="comment">     *  0:  alt来源为激光</span></div><div class="line"><span class="comment">     *  1:  alt来源由激光切换到气压</span></div><div class="line"><span class="comment">     *  2:  alt来源由气压切换到激光</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">static</span> <span class="keyword">char</span> state           = <span class="number">0</span>;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> num              = <span class="number">0</span>;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">float</span> alt            = <span class="number">0</span>;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">float</span> align          = <span class="number">0</span>;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">float</span> laser_buf[<span class="number">20</span>]  = &#123;<span class="number">0.0f</span>&#125;;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">float</span> baro_buf[<span class="number">20</span>]   = &#123;<span class="number">0.0f</span>&#125;;</div><div class="line">    <span class="keyword">static</span> <span class="keyword">int</span> count            = <span class="number">0</span>;</div><div class="line">    <span class="keyword">float</span> vel                   = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">19</span>; i++)&#123;</div><div class="line">        laser_buf[i] = laser_buf[i+<span class="number">1</span>];</div><div class="line">        baro_buf[i]  = baro_buf[i+<span class="number">1</span>];</div><div class="line">    &#125;</div><div class="line">    laser_buf[<span class="number">19</span>] = alt_laser;</div><div class="line">    baro_buf[<span class="number">19</span>]  = alt_baro;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(count &lt; <span class="number">20</span>)  count++;</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(count &gt;= <span class="number">19</span>)&#123;</div><div class="line">        <span class="comment">// 气压速度大于0.1m/s时视为非悬停状态，此时不做切换</span></div><div class="line">        <span class="comment">// todo: 此值可能需要调整</span></div><div class="line">        <span class="keyword">if</span>( <span class="built_in">abs</span>((alt_laser - laser_buf[<span class="number">1</span>]) - (alt_baro  - baro_buf[<span class="number">1</span>])) &gt; <span class="number">0.05f</span> )&#123;</div><div class="line">            <span class="keyword">if</span>( state != <span class="number">1</span>)&#123;</div><div class="line">                align = alt - alt_baro;      <span class="comment">// 切换到气压数据前，记录气压的对齐值</span></div><div class="line">            &#125;</div><div class="line">            state = <span class="number">1</span>;</div><div class="line">            num = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( state == <span class="number">1</span> )&#123;</div><div class="line">            num++;</div><div class="line">            <span class="keyword">if</span>(num == <span class="number">400</span>)&#123;                 <span class="comment">//满足1s内数据平稳才能切换回激光数据，防止某些条件下频繁切换</span></div><div class="line">                num = <span class="number">0</span>;</div><div class="line">                state = <span class="number">2</span>;                  <span class="comment">// 切换回激光数据</span></div><div class="line">                align = alt - alt_laser;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">switch</span>(state)&#123;</div><div class="line">        <span class="keyword">case</span> <span class="number">0</span> : alt = alt_laser; vel = vel_laser; <span class="keyword">break</span>;            <span class="comment">//采用激光高度，不发生切换</span></div><div class="line">        <span class="keyword">case</span> <span class="number">1</span> : alt = alt_baro  + align; vel = vel_baro; <span class="keyword">break</span>;     <span class="comment">//切换为气压，并对齐 </span></div><div class="line">        <span class="keyword">case</span> <span class="number">2</span> : alt = alt_laser + align; vel = vel_laser; <span class="keyword">break</span>; <span class="comment">//切换为激光，并对齐 </span></div><div class="line">        <span class="keyword">default</span>: <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;高度控制时有两种模式，一种是地形跟随，另外一种就是地形突变时，飞行器高度不跟随地形改变。&lt;/p&gt;
+&lt;p&gt;地形跟随模式就直接用对地测距数据融合加计就可以了。&lt;/p&gt;
+&lt;p&gt;第二种模式的话就需要在测距数据发生突变的时候，切换到气压高度。但是切换的时候要进行数据对齐，并且在测距数
+      
+    
+    </summary>
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
+    
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
+    
+      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
+    
+      <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
+    
+  </entry>
   
   <entry>
     <title>加计震动滤波</title>
@@ -47,35 +78,7 @@
     
       <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
     
-  </entry>
-  
-  <entry>
-    <title>硬件</title>
-    <link href="https://lqucool.github.io/2017/10/22/%E7%A1%AC%E4%BB%B6/"/>
-    <id>https://lqucool.github.io/2017/10/22/硬件/</id>
-    <published>2017-10-21T16:00:00.000Z</published>
-    <updated>2017-10-21T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>最近一周一直在做高度控制的算法，每天加班都很晚，晚上也很少有时间做些东西，不过还是趁着这个周末的时间完成了大部分的硬件设计。</p><p>硬件的设计很多还是参考了px4的硬件，也很想尝试下能不能兼容px4固件。</p><blockquote><p>todo: 后面有时间在详细整理硬件电路的设计。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;最近一周一直在做高度控制的算法，每天加班都很晚，晚上也很少有时间做些东西，不过还是趁着这个周末的时间完成了大部分的硬件设计。&lt;/p&gt;
-&lt;p&gt;硬件的设计很多还是参考了px4的硬件，也很想尝试下能不能兼容px4固件。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;todo: 后面有时
-      
-    
-    </summary>
-    
-      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
-    
-    
-      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
-    
-      <category term="hardware" scheme="https://lqucool.github.io/tags/hardware/"/>
+      <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
     
   </entry>
   
@@ -106,6 +109,36 @@
     
     
       <category term="work" scheme="https://lqucool.github.io/tags/work/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>硬件</title>
+    <link href="https://lqucool.github.io/2017/10/22/%E7%A1%AC%E4%BB%B6/"/>
+    <id>https://lqucool.github.io/2017/10/22/硬件/</id>
+    <published>2017-10-21T16:00:00.000Z</published>
+    <updated>2017-10-21T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近一周一直在做高度控制的算法，每天加班都很晚，晚上也很少有时间做些东西，不过还是趁着这个周末的时间完成了大部分的硬件设计。</p><p>硬件的设计很多还是参考了px4的硬件，也很想尝试下能不能兼容px4固件。</p><blockquote><p>todo: 后面有时间在详细整理硬件电路的设计。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近一周一直在做高度控制的算法，每天加班都很晚，晚上也很少有时间做些东西，不过还是趁着这个周末的时间完成了大部分的硬件设计。&lt;/p&gt;
+&lt;p&gt;硬件的设计很多还是参考了px4的硬件，也很想尝试下能不能兼容px4固件。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;todo: 后面有时
+      
+    
+    </summary>
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
+    
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
+    
+      <category term="hardware" scheme="https://lqucool.github.io/tags/hardware/"/>
     
   </entry>
   
@@ -186,6 +219,8 @@
     
       <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
     
+      <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
+    
   </entry>
   
   <entry>
@@ -234,6 +269,8 @@
     
     
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
+    
+      <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
     
       <category term="height fusion" scheme="https://lqucool.github.io/tags/height-fusion/"/>
     
