@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Flying Arena" />
+  <meta name="keywords" content="quadcopter,position fusion," />
 
 
 
@@ -107,16 +107,18 @@
 
 
 
-<meta name="description" content="Stay Hungry, Stay Foolish.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Make the ideas fly">
-<meta property="og:url" content="https://lqucool.github.io/tags/height/index.html">
+<meta name="description" content="Sensorsinput: ax, ay, az (acceleration NED)  states: px, py, pz ( position NED, m) vx, vy, vz ( vel NED, m/s) bx, by, bz ( accel bias, m/s^2) tz (terrain altitude, ASL, m)  measurements: sonar: pz (me">
+<meta name="keywords" content="quadcopter,position fusion">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高度融合">
+<meta property="og:url" content="https://lqucool.github.io/2018/03/14/LocalPositionEstimator/index.html">
 <meta property="og:site_name" content="Make the ideas fly">
-<meta property="og:description" content="Stay Hungry, Stay Foolish.">
+<meta property="og:description" content="Sensorsinput: ax, ay, az (acceleration NED)  states: px, py, pz ( position NED, m) vx, vy, vz ( vel NED, m/s) bx, by, bz ( accel bias, m/s^2) tz (terrain altitude, ASL, m)  measurements: sonar: pz (me">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-13T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Make the ideas fly">
-<meta name="twitter:description" content="Stay Hungry, Stay Foolish.">
+<meta name="twitter:title" content="高度融合">
+<meta name="twitter:description" content="Sensorsinput: ax, ay, az (acceleration NED)  states: px, py, pz ( position NED, m) vx, vy, vz ( vel NED, m/s) bx, by, bz ( accel bias, m/s^2) tz (terrain altitude, ASL, m)  measurements: sonar: pz (me">
 
 
 
@@ -146,7 +148,7 @@
 
 
 
-  <link rel="canonical" href="https://lqucool.github.io/tags/height/"/>
+  <link rel="canonical" href="https://lqucool.github.io/2018/03/14/LocalPositionEstimator/"/>
 
 
 
@@ -171,7 +173,7 @@
         border-left-color: #1E92FB;    /*左边框颜色*/
     }
 </style>
-  <title>Tag: height | Make the ideas fly</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>高度融合 | Make the ideas fly</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -190,7 +192,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -328,138 +330,416 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>height<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://lqucool.github.io/2018/03/14/LocalPositionEstimator/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qu.L">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://owsesa4hj.bkt.clouddn.com/touxiang.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Make the ideas fly">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/22/高度切换/" itemprop="url">
-              
-                <span itemprop="name">高度切换</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">高度融合</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-22T00:00:00+08:00"
-              content="2017-11-22" >
-          11-22
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-14T00:00:00+08:00">
+                2018-03-14
+              </time>
+            
 
-    </header>
-  </article>
+            
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Post modified&#58;</span>
+              
+              <time title="Post modified" itemprop="dateModified" datetime="2018-03-14T00:00:00+08:00">
+                2018-03-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/quadcopter/" itemprop="url" rel="index">
+                    <span itemprop="name">quadcopter</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/13/加计震动滤波/" itemprop="url">
-              
-                <span itemprop="name">加计震动滤波</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-13T00:00:00+08:00"
-              content="2017-11-13" >
-          11-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
+        <h3 id="Sensors"><a href="#Sensors" class="headerlink" title="Sensors"></a>Sensors</h3><h6 id="input"><a href="#input" class="headerlink" title="input:"></a><strong><em>input:</em></strong></h6><ul>
+<li><code>ax, ay, az (acceleration NED)</code></li>
+</ul>
+<h6 id="states"><a href="#states" class="headerlink" title="states:"></a><strong><em>states:</em></strong></h6><ul>
+<li><code>px, py, pz ( position NED, m)</code></li>
+<li><code>vx, vy, vz ( vel NED, m/s)</code></li>
+<li><code>bx, by, bz ( accel bias, m/s^2)</code></li>
+<li><code>tz (terrain altitude, ASL, m)</code></li>
+</ul>
+<h6 id="measurements"><a href="#measurements" class="headerlink" title="measurements:"></a><strong><em>measurements:</em></strong></h6><ul>
+<li><code>sonar: pz (measured dcos(phi)cos(theta))</code></li>
+<li><code>baro: pz</code></li>
+<li><code>flow: vx, vy (flow is in body x, y frame)</code></li>
+<li><code>gps: px, py, pz, vx, vy, vz (flow is in body x, y frame)</code></li>
+<li><code>lidar: pz (actual measured dcos(phi)cos(theta))</code></li>
+<li><code>vision: px, py, pz, vx, vy, vz</code></li>
+<li><code>mocap: px, py, pz</code></li>
+<li><code>land (detects when landed)): pz (always measures agl = 0)</code></li>
+</ul>
+<hr>
+<h3 id="Continuous-time-extended-Kalman-filter"><a href="#Continuous-time-extended-Kalman-filter" class="headerlink" title="Continuous-time extended Kalman filter"></a>Continuous-time extended Kalman filter</h3><p><strong><em>prediction</em></strong></p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\dot{x}_{(+|-)} = A*x_{(-|-)} + B*u_{(+)}    \\
+&\dot{P}_{(+|-)} = A*P_{(-|-)}*A^T + B*R_{acc}*B^T + Q
+\end{align}</script><p><strong><em>correction</em></strong></p>
+<script type="math/tex; mode=display">
+\begin{align}
+&K_i = P_{(+|-)}  * C^T * (C * P_{(+|-)}  * C^T + R_{sensor})^{-1} \\
+&x_{(+|+)} =  x_{(+|-)} + K_i * (y_i - C_i * x_{(+|-)} ) \\
+&P_{(+|+)}  = (I - K_i * C) * P_{(+|-)} 
+\end{align}</script><hr>
+<ul>
+<li><code>detect distance sensors</code></li>
+<li><code>see which updates are available</code></li>
+<li><code>get new data</code></li>
+<li><code>update parameters</code></li>
+<li><code>is xy valid?</code></li>
+<li><code>is z valid?</code></li>
+<li><code>is terrain valid?</code></li>
+<li><code>check timeouts</code></li>
+<li><code>reinitialize x if necessary</code></li>
+<li><code>force P symmetry and reinitialize P if necessary</code></li>
+</ul>
+<h4 id="Predict"><a href="#Predict" class="headerlink" title="Predict"></a><strong><em>Predict</em></strong></h4><script type="math/tex; mode=display">
+x:
+\left[
+    \begin{array}{cccc}
+    x  \\
+    y  \\
+    z  \\
+    vx  \\
+    vy  \\
+    vz  \\
+    bx  \\
+    by  \\
+    bz  \\
+    tz  \\
+    \end{array}
+    \right]
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+\qquad
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/12/高度控制/" itemprop="url">
-              
-                <span itemprop="name">高度控制</span>
-              
-            </a>
-        
-      </h2>
+    u:
+    \left[
+    \begin{array}{cccc}
+    a_{x\_{ned}} \\
+    a_{y\_{ned}} \\
+     a_{z\_{ned}} \\
+    \end{array}
+    \right]</script><script type="math/tex; mode=display">
+A:
+\left[
+    \begin{array}{cccc}
+    0 & 0 & 0    & 1 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 & 0 & 0    & 0 & 1 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & _{-R_{att(0,0)}} & _{-R_{att(0,1)}} & _{-R_{att(0,2)}} & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & _{-R_{att(1,0)}} & _{-R_{att(1,1)}} & _{-R_{att(1,2)}} & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & _{-R_{att(2,0)}} & _{-R_{att(2,1)}} & _{-R_{att(2,2)}} & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    \end{array}
+    \right]
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-10-12T00:00:00+08:00"
-              content="2017-10-12" >
-          10-12
-        </time>
-      </div>
+\qquad
 
-    </header>
-  </article>
-
-
+    B:
+\left[
+    \begin{array}{cccc}
+    0 & 0 & 0    \\
+    0 & 0 & 0    \\
+    0 &  0 & 0 \\
+    1 &  0 & 0 \\
+    0 &  1 & 0 \\
+    0 &  0 & 1 \\
+    0 &  0 & 0 \\
+    0 &  0 & 0 \\
+    0 &  0 & 0 \\
+    0 &  0 & 0 \\
+    \end{array}
+    \right]</script><script type="math/tex; mode=display">
+P:
+\left[
+    \begin{array}{cccc}
+    8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 & 8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 8 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0.18 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0.18 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0.18 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 8  \\
+    \end{array}
+    \right]</script><script type="math/tex; mode=display">
+Q: 
+\left[
+    \begin{array}{cccc}
+    0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0.01 & 0 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0.01 & 0 & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0  \\
+    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & pt  \\
+    \end{array}
+    \right]</script><script type="math/tex; mode=display">
+R_{acc}:
+\left[
+    \begin{array}{cccc}
+    0 .12^2& 0 & 0    \\
+    0 & 0.12^2 & 0    \\
+    0 &  0 & 0.02^2     \\
+    \end{array}
+    \right]</script><script type="math/tex; mode=display">
+\begin{align}
+&u = \_R\_att * a_{body}  \\
+&u(a_{z\_ned})=  u(a_{z\_ned}) - 9.81
+\end{align}</script><p><em>update A:</em></p>
+<script type="math/tex; mode=display">
+A(vx,bx) = -R_{att(0,0)} \\
+A(vx,by) = -R_{att(0,1)} \\
+...</script><p><em>integrate runge kutta 4th order:</em></p>
+<script type="math/tex; mode=display">
+\begin{align}
+&h = dt\\
+&k1 = A * x + B * u \\
+&k2 = A * (x + k1 * h / 2) + B * u \\
+&k3 = A * (x + k2 * h / 2) + B * u \\
+&k4 = A * (x + k3) + B *u \\
+&dx = (k1 + k2 * 2 + k3 * 2 + k4) * (h /6)
+\end{align}</script><p><em>saturate bias:</em></p>
+<script type="math/tex; mode=display">
+\begin{align}
+&bx = dx(bx) + x(bx) \\
+&bx = BIAS\_MAX * bx / |bx| \\
+&dx(bx) = bx - x(bx)
+\end{align}</script><p><em>propagate:</em></p>
+<script type="math/tex; mode=display">
+\begin{align}
+&x = x + dx \\
+&dP = (A * P + P * A^T + B * R_{acc} * B^T + Q) * dt \\
+&P = P + dP
+\end{align}</script><hr>
+<h4 id="Correct"><a href="#Correct" class="headerlink" title="Correct"></a><strong><em>Correct</em></strong></h4><script type="math/tex; mode=display">
+\begin{align}
+&S\_I = (C * P * C^T + R_{sensor})^{-1} \\
+&r =  y - C * x \\
+&K = P * C^T *S\_I  \\
+&dx = K *r \\
+&x = x +  dx \\ 
+&P = P - K * C * P
+\end{align}</script><h5 id="BaroCorrect"><a href="#BaroCorrect" class="headerlink" title="BaroCorrect"></a><strong><em>BaroCorrect</em></strong></h5><script type="math/tex; mode=display">
+\begin{align}
+y&: [z_{baro}] \\
+R_{baro}&: [3.0^2] \\
+C&:
+    \left[
+    \begin{array}{cccc}
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+    \end{array}
+    \right]
+\end{align}</script><h5 id="LidarCorrect"><a href="#LidarCorrect" class="headerlink" title="LidarCorrect"></a><strong><em>LidarCorrect</em></strong></h5><script type="math/tex; mode=display">
+\begin{align}
+y &: [z_{lidar}] \\
+R_{lidar}& : [0.03^2] \\
+C&:
+    \left[
+    \begin{array}{cccc}
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1  \\
+    \end{array}
+    \right]
+\end{align}</script>
       
-        
+    </div>
+    
+    
+    
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/09/24/高度融合/" itemprop="url">
-              
-                <span itemprop="name">高度融合</span>
-              
-            </a>
-        
-      </h2>
+    
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-09-24T00:00:00+08:00"
-              content="2017-09-24" >
-          09-24
-        </time>
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    Qu.L
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="https://lqucool.github.io/2018/03/14/LocalPositionEstimator/" title="高度融合">https://lqucool.github.io/2018/03/14/LocalPositionEstimator/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+</ul>
+
       </div>
-
-    </header>
-  </article>
+    
 
 
+
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------End of the article <i class="fa fa-plane"></i> Thanks for your reading-------------</div>
+    
+</div>
       
     </div>
 
+
+
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/quadcopter/" rel="tag"><i class="fa fa-tag"></i> quadcopter</a>
+          
+            <a href="/tags/position-fusion/" rel="tag"><i class="fa fa-tag"></i> position fusion</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/22/高度切换/" rel="next" title="高度切换">
+                <i class="fa fa-chevron-left"></i> 高度切换
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -467,6 +747,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -487,8 +771,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -560,6 +853,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sensors"><span class="nav-number">1.</span> <span class="nav-text">Sensors</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">input:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#states"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">states:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#measurements"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">measurements:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-time-extended-Kalman-filter"><span class="nav-number">2.</span> <span class="nav-text">Continuous-time extended Kalman filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Predict"><span class="nav-number">2.1.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correct"><span class="nav-number">2.2.</span> <span class="nav-text">Correct</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BaroCorrect"><span class="nav-number">2.2.1.</span> <span class="nav-text">BaroCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LidarCorrect"><span class="nav-number">2.2.2.</span> <span class="nav-text">LidarCorrect</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

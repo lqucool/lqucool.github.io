@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lqucool.github.io/"/>
-  <updated>2017-11-21T16:00:00.000Z</updated>
+  <updated>2018-03-13T16:00:00.000Z</updated>
   <id>https://lqucool.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>高度融合</title>
+    <link href="https://lqucool.github.io/2018/03/14/LocalPositionEstimator/"/>
+    <id>https://lqucool.github.io/2018/03/14/LocalPositionEstimator/</id>
+    <published>2018-03-13T16:00:00.000Z</published>
+    <updated>2018-03-13T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Sensors"><a href="#Sensors" class="headerlink" title="Sensors"></a>Sensors</h3><h6 id="input"><a href="#input" class="headerlink" title="input:"></a><strong><em>input:</em></strong></h6><ul><li><code>ax, ay, az (acceleration NED)</code></li></ul><h6 id="states"><a href="#states" class="headerlink" title="states:"></a><strong><em>states:</em></strong></h6><ul><li><code>px, py, pz ( position NED, m)</code></li><li><code>vx, vy, vz ( vel NED, m/s)</code></li><li><code>bx, by, bz ( accel bias, m/s^2)</code></li><li><code>tz (terrain altitude, ASL, m)</code></li></ul><h6 id="measurements"><a href="#measurements" class="headerlink" title="measurements:"></a><strong><em>measurements:</em></strong></h6><ul><li><code>sonar: pz (measured dcos(phi)cos(theta))</code></li><li><code>baro: pz</code></li><li><code>flow: vx, vy (flow is in body x, y frame)</code></li><li><code>gps: px, py, pz, vx, vy, vz (flow is in body x, y frame)</code></li><li><code>lidar: pz (actual measured dcos(phi)cos(theta))</code></li><li><code>vision: px, py, pz, vx, vy, vz</code></li><li><code>mocap: px, py, pz</code></li><li><code>land (detects when landed)): pz (always measures agl = 0)</code></li></ul><hr><h3 id="Continuous-time-extended-Kalman-filter"><a href="#Continuous-time-extended-Kalman-filter" class="headerlink" title="Continuous-time extended Kalman filter"></a>Continuous-time extended Kalman filter</h3><p><strong><em>prediction</em></strong></p><script type="math/tex; mode=display">\begin{align}&\dot{x}_{(+|-)} = A*x_{(-|-)} + B*u_{(+)}    \\&\dot{P}_{(+|-)} = A*P_{(-|-)}*A^T + B*R_{acc}*B^T + Q\end{align}</script><p><strong><em>correction</em></strong></p><script type="math/tex; mode=display">\begin{align}&K_i = P_{(+|-)}  * C^T * (C * P_{(+|-)}  * C^T + R_{sensor})^{-1} \\&x_{(+|+)} =  x_{(+|-)} + K_i * (y_i - C_i * x_{(+|-)} ) \\&P_{(+|+)}  = (I - K_i * C) * P_{(+|-)} \end{align}</script><hr><ul><li><code>detect distance sensors</code></li><li><code>see which updates are available</code></li><li><code>get new data</code></li><li><code>update parameters</code></li><li><code>is xy valid?</code></li><li><code>is z valid?</code></li><li><code>is terrain valid?</code></li><li><code>check timeouts</code></li><li><code>reinitialize x if necessary</code></li><li><code>force P symmetry and reinitialize P if necessary</code></li></ul><h4 id="Predict"><a href="#Predict" class="headerlink" title="Predict"></a><strong><em>Predict</em></strong></h4><script type="math/tex; mode=display">x:\left[    \begin{array}{cccc}    x  \\    y  \\    z  \\    vx  \\    vy  \\    vz  \\    bx  \\    by  \\    bz  \\    tz  \\    \end{array}    \right]\qquad    u:    \left[    \begin{array}{cccc}    a_{x\_{ned}} \\    a_{y\_{ned}} \\     a_{z\_{ned}} \\    \end{array}    \right]</script><script type="math/tex; mode=display">A:\left[    \begin{array}{cccc}    0 & 0 & 0    & 1 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 & 0 & 0    & 0 & 1 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & _{-R_{att(0,0)}} & _{-R_{att(0,1)}} & _{-R_{att(0,2)}} & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & _{-R_{att(1,0)}} & _{-R_{att(1,1)}} & _{-R_{att(1,2)}} & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & _{-R_{att(2,0)}} & _{-R_{att(2,1)}} & _{-R_{att(2,2)}} & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    \end{array}    \right]\qquad    B:\left[    \begin{array}{cccc}    0 & 0 & 0    \\    0 & 0 & 0    \\    0 &  0 & 0 \\    1 &  0 & 0 \\    0 &  1 & 0 \\    0 &  0 & 1 \\    0 &  0 & 0 \\    0 &  0 & 0 \\    0 &  0 & 0 \\    0 &  0 & 0 \\    \end{array}    \right]</script><script type="math/tex; mode=display">P:\left[    \begin{array}{cccc}    8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 & 8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 8 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0.18 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0.18 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0.18 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 8  \\    \end{array}    \right]</script><script type="math/tex; mode=display">Q: \left[    \begin{array}{cccc}    0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0.01 & 0 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0.01 & 0 & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0  \\    0 &  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & pt  \\    \end{array}    \right]</script><script type="math/tex; mode=display">R_{acc}:\left[    \begin{array}{cccc}    0 .12^2& 0 & 0    \\    0 & 0.12^2 & 0    \\    0 &  0 & 0.02^2     \\    \end{array}    \right]</script><script type="math/tex; mode=display">\begin{align}&u = \_R\_att * a_{body}  \\&u(a_{z\_ned})=  u(a_{z\_ned}) - 9.81\end{align}</script><p><em>update A:</em></p><script type="math/tex; mode=display">A(vx,bx) = -R_{att(0,0)} \\A(vx,by) = -R_{att(0,1)} \\...</script><p><em>integrate runge kutta 4th order:</em></p><script type="math/tex; mode=display">\begin{align}&h = dt\\&k1 = A * x + B * u \\&k2 = A * (x + k1 * h / 2) + B * u \\&k3 = A * (x + k2 * h / 2) + B * u \\&k4 = A * (x + k3) + B *u \\&dx = (k1 + k2 * 2 + k3 * 2 + k4) * (h /6)\end{align}</script><p><em>saturate bias:</em></p><script type="math/tex; mode=display">\begin{align}&bx = dx(bx) + x(bx) \\&bx = BIAS\_MAX * bx / |bx| \\&dx(bx) = bx - x(bx)\end{align}</script><p><em>propagate:</em></p><script type="math/tex; mode=display">\begin{align}&x = x + dx \\&dP = (A * P + P * A^T + B * R_{acc} * B^T + Q) * dt \\&P = P + dP\end{align}</script><hr><h4 id="Correct"><a href="#Correct" class="headerlink" title="Correct"></a><strong><em>Correct</em></strong></h4><script type="math/tex; mode=display">\begin{align}&S\_I = (C * P * C^T + R_{sensor})^{-1} \\&r =  y - C * x \\&K = P * C^T *S\_I  \\&dx = K *r \\&x = x +  dx \\ &P = P - K * C * P\end{align}</script><h5 id="BaroCorrect"><a href="#BaroCorrect" class="headerlink" title="BaroCorrect"></a><strong><em>BaroCorrect</em></strong></h5><script type="math/tex; mode=display">\begin{align}y&: [z_{baro}] \\R_{baro}&: [3.0^2] \\C&:    \left[    \begin{array}{cccc}    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\    \end{array}    \right]\end{align}</script><h5 id="LidarCorrect"><a href="#LidarCorrect" class="headerlink" title="LidarCorrect"></a><strong><em>LidarCorrect</em></strong></h5><script type="math/tex; mode=display">\begin{align}y &: [z_{lidar}] \\R_{lidar}& : [0.03^2] \\C&:    \left[    \begin{array}{cccc}    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1  \\    \end{array}    \right]\end{align}</script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Sensors&quot;&gt;&lt;a href=&quot;#Sensors&quot; class=&quot;headerlink&quot; title=&quot;Sensors&quot;&gt;&lt;/a&gt;Sensors&lt;/h3&gt;&lt;h6 id=&quot;input&quot;&gt;&lt;a href=&quot;#input&quot; class=&quot;headerlink&quot; ti
+      
+    
+    </summary>
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/categories/quadcopter/"/>
+    
+    
+      <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
+    
+      <category term="position fusion" scheme="https://lqucool.github.io/tags/position-fusion/"/>
+    
+  </entry>
   
   <entry>
     <title>高度切换</title>
@@ -41,9 +68,9 @@
     
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
-      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
-    
       <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
+    
+      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
     
   </entry>
   
@@ -76,9 +103,9 @@
     
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
-      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
-    
       <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
+    
+      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
     
   </entry>
   
@@ -217,9 +244,9 @@
     
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
-      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
-    
       <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
+    
+      <category term="height control" scheme="https://lqucool.github.io/tags/height-control/"/>
     
   </entry>
   
@@ -270,9 +297,9 @@
     
       <category term="quadcopter" scheme="https://lqucool.github.io/tags/quadcopter/"/>
     
-      <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
-    
       <category term="height fusion" scheme="https://lqucool.github.io/tags/height-fusion/"/>
+    
+      <category term="height" scheme="https://lqucool.github.io/tags/height/"/>
     
   </entry>
   
