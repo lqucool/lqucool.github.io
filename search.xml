@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[高度融合]]></title>
+    <title><![CDATA[LocalPositionEstimator]]></title>
     <url>%2F2018%2F03%2F14%2FLocalPositionEstimator%2F</url>
     <content type="text"><![CDATA[Sensorsinput: ax, ay, az (acceleration NED) states: px, py, pz ( position NED, m) vx, vy, vz ( vel NED, m/s) bx, by, bz ( accel bias, m/s^2) tz (terrain altitude, ASL, m) measurements: sonar: pz (measured dcos(phi)cos(theta)) baro: pz flow: vx, vy (flow is in body x, y frame) gps: px, py, pz, vx, vy, vz (flow is in body x, y frame) lidar: pz (actual measured dcos(phi)cos(theta)) vision: px, py, pz, vx, vy, vz mocap: px, py, pz land (detects when landed)): pz (always measures agl = 0) Continuous-time extended Kalman filterprediction \begin{align} &\dot{x}_{(+|-)} = A*x_{(-|-)} + B*u_{(+)} \\ &\dot{P}_{(+|-)} = A*P_{(-|-)}*A^T + B*R_{acc}*B^T + Q \end{align}correction \begin{align} &K_i = P_{(+|-)} * C^T * (C * P_{(+|-)} * C^T + R_{sensor})^{-1} \\ &x_{(+|+)} = x_{(+|-)} + K_i * (y_i - C_i * x_{(+|-)} ) \\ &P_{(+|+)} = (I - K_i * C) * P_{(+|-)} \end{align} detect distance sensors see which updates are available get new data update parameters is xy valid? is z valid? is terrain valid? check timeouts reinitialize x if necessary force P symmetry and reinitialize P if necessary Predict x: \left[ \begin{array}{cccc} x \\ y \\ z \\ vx \\ vy \\ vz \\ bx \\ by \\ bz \\ tz \\ \end{array} \right] \qquad u: \left[ \begin{array}{cccc} a_{x\_{ned}} \\ a_{y\_{ned}} \\ a_{z\_{ned}} \\ \end{array} \right] A: \left[ \begin{array}{cccc} 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & _{-R_{att(0,0)}} & _{-R_{att(0,1)}} & _{-R_{att(0,2)}} & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & _{-R_{att(1,0)}} & _{-R_{att(1,1)}} & _{-R_{att(1,2)}} & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & _{-R_{att(2,0)}} & _{-R_{att(2,1)}} & _{-R_{att(2,2)}} & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \end{array} \right] \qquad B: \left[ \begin{array}{cccc} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ \end{array} \right] P: \left[ \begin{array}{cccc} 8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0.18 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0.18 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0.18 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 8 \\ \end{array} \right] Q: \left[ \begin{array}{cccc} 0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0.01 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0.01 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0.01 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1e^{-6} & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & pt \\ \end{array} \right] R_{acc}: \left[ \begin{array}{cccc} 0 .12^2& 0 & 0 \\ 0 & 0.12^2 & 0 \\ 0 & 0 & 0.02^2 \\ \end{array} \right] \begin{align} &u = \_R\_att * a_{body} \\ &u(a_{z\_ned})= u(a_{z\_ned}) - 9.81 \end{align}update A: A(vx,bx) = -R_{att(0,0)} \\ A(vx,by) = -R_{att(0,1)} \\ ...integrate runge kutta 4th order: \begin{align} &h = dt\\ &k1 = A * x + B * u \\ &k2 = A * (x + k1 * h / 2) + B * u \\ &k3 = A * (x + k2 * h / 2) + B * u \\ &k4 = A * (x + k3) + B *u \\ &dx = (k1 + k2 * 2 + k3 * 2 + k4) * (h /6) \end{align}saturate bias: \begin{align} &bx = dx(bx) + x(bx) \\ &bx = BIAS\_MAX * bx / |bx| \\ &dx(bx) = bx - x(bx) \end{align}propagate: \begin{align} &x = x + dx \\ &dP = (A * P + P * A^T + B * R_{acc} * B^T + Q) * dt \\ &P = P + dP \end{align} Correct \begin{align} &S\_I = (C * P * C^T + R_{sensor})^{-1} \\ &r = y - C * x \\ &K = P * C^T *S\_I \\ &dx = K *r \\ &x = x + dx \\ &P = P - K * C * P \end{align}BaroCorrect \begin{align} y&: [z_{baro}] \\ R_{baro}&: [3.0^2] \\ C&: \left[ \begin{array}{cccc} 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \end{array} \right] \end{align}LidarCorrect \begin{align} y &: [z_{lidar}] \\ R_{lidar}& : [0.03^2] \\ C&: \left[ \begin{array}{cccc} 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ \end{array} \right] \end{align}]]></content>
       <categories>
@@ -21,8 +21,8 @@
       </categories>
       <tags>
         <tag>quadcopter</tag>
-        <tag>height</tag>
         <tag>height control</tag>
+        <tag>height</tag>
       </tags>
   </entry>
   <entry>
@@ -34,8 +34,8 @@
       </categories>
       <tags>
         <tag>quadcopter</tag>
-        <tag>height</tag>
         <tag>height control</tag>
+        <tag>height</tag>
       </tags>
   </entry>
   <entry>
@@ -82,8 +82,8 @@
       </categories>
       <tags>
         <tag>quadcopter</tag>
-        <tag>height</tag>
         <tag>height control</tag>
+        <tag>height</tag>
       </tags>
   </entry>
   <entry>
@@ -118,8 +118,8 @@
       </categories>
       <tags>
         <tag>quadcopter</tag>
-        <tag>height fusion</tag>
         <tag>height</tag>
+        <tag>height fusion</tag>
       </tags>
   </entry>
 </search>
