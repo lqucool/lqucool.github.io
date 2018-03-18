@@ -612,18 +612,18 @@ A(vx,by) = -R_{att(0,1)} \\
 \end{align}</script><p><em>propagate:</em></p>
 <script type="math/tex; mode=display">
 \begin{align}
-&x = x + dx \\
-&dP = (A * P + P * A^T + B * R_{acc} * B^T + Q) * dt \\
-&P = P + dP
+x &= x + dx \\
+dP &= (A * P + P * A^T + B * R_{acc} * B^T + Q) * dt \\
+P &= P + dP
 \end{align}</script><hr>
 <h4 id="Correct"><a href="#Correct" class="headerlink" title="Correct"></a><strong><em>Correct</em></strong></h4><script type="math/tex; mode=display">
 \begin{align}
-&S\_I = (C * P * C^T + R_{sensor})^{-1} \\
-&r =  y - C * x \\
-&K = P * C^T *S\_I  \\
-&dx = K *r \\
-&x = x +  dx \\ 
-&P = P - K * C * P
+S\_I &= (C * P * C^T + R_{sensor})^{-1} \\
+r &=  y - C * x \\
+K &= P * C^T *S\_I  \\
+dx &= K *r \\
+x &= x +  dx \\ 
+P &= P - K * C * P
 \end{align}</script><h5 id="BaroCorrect"><a href="#BaroCorrect" class="headerlink" title="BaroCorrect"></a><strong><em>BaroCorrect</em></strong></h5><script type="math/tex; mode=display">
 \begin{align}
 y&: [z_{baro}] \\
@@ -641,9 +641,91 @@ R_{lidar}& : [0.03^2] \\
 C&:
     \left[
     \begin{array}{cccc}
-    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1  \\
+    0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & -1  \\
     \end{array}
-    \right]
+    \right] \\
+y &= y * cos(euler(0)) * cos(euler(1)) \\
+
+\end{align}</script><h5 id="FlowCorrect"><a href="#FlowCorrect" class="headerlink" title="FlowCorrect"></a><em>FlowCorrect</em></h5><p><em>complement:</em></p>
+<script type="math/tex; mode=display">
+pixel\_flow\_integral  = \frac{v *dt } {h} * scale_h + scale_{gyro} * tan(gyro\_rate\_integral))</script><ul>
+<li><code>check for sane pitch/roll</code></li>
+</ul>
+<ul>
+<li><code>check for agl</code></li>
+</ul>
+<ul>
+<li><code>check quality</code></li>
+</ul>
+<ul>
+<li><code>calculate range to center of image for flow</code></li>
+</ul>
+<p><em>optical flow in x, y axis:</em></p>
+<script type="math/tex; mode=display">
+\begin{align}
+&d = (x(z) - x(tz) ) * cos(euler(phi)) * euler(theta) \\
+&flow\_x\_rad = pixel\_flow\_x\_integral * scale \\
+&flow\_y\_rad = pixel\_flow\_y\_integral * scale \\
+&dt\_flow = integration\_timespan / 1e6;
+\end{align}</script><p><em>angular rotation in x, y axis:</em></p>
+<script type="math/tex; mode=display">
+gyro\_x\_rad = high\_pass\_flt(gyro\_x\_rate\_integral) \\
+gyro\_y\_rad = high\_pass\_flt(gyro\_y\_rate\_integral) \\</script><p><em>compute velocities in body frame using ground distance:</em></p>
+<script type="math/tex; mode=display">
+delta\_b =    
+\left[
+    \begin{array}{cccc}
+    +(flow\_y\_rad - gyro\_y\_rad) * d  \\
+    -(flow\_x\_rad - gyro\_x\_rad) * d  \\
+    0
+    \end{array}
+    \right] \\</script><p><em>rotation of flow from body to nav frame:</em></p>
+<script type="math/tex; mode=display">
+\begin{align}
+delta\_n &= R\_att * delta\_b \\
+\end{align}</script><script type="math/tex; mode=display">
+y =
+\left[
+    \begin{array}{cccc}
+    delta\_n(0) / dt\_flow \\
+    delta\_n(1) / dt\_flow
+    \end{array}
+    \right] \\
+
+    C = 
+    \left[
+    \begin{array}{cccc}
+       1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+       0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 
+    \end{array}
+    \right] \\
+
+    R_{flow} = 
+    \left[
+    \begin{array}{cccc}
+       0 & 0  \\
+       0 & 0 
+    \end{array}
+    \right]</script><p><em>polynomial noise model, found using least squares fit:</em></p>
+<script type="math/tex; mode=display">
+p[5] = \{0.04005232f, -0.00656446f, -0.26265873f,  0.13686658f, -0.00397357f\} \\
+h = x(z) - x(tz) \\
+v = y.norm()</script><p><em>compute polynomial value:</em></p>
+<script type="math/tex; mode=display">
+\begin{align}
+flow\_vxy\_stddev &= p[0] *h + p[1] * h * h + p[2] * v * h + p[4] * v * h * h \\
+\\
+rotrate\_sq &= att.rollspeed * att.rolldspeed \\
+&+ att.pitchspeed *att.pitchspeed \\
+&+ att.yawspeed * att.yawspeed \\
+\\
+rot\_sq &= euler(0) *euler(0) + euler(1) * euler(1) \\
+\\
+R_{flow}(0,0) &= flow\_vxy\_stddev  * flow\_vxy\_stddev  \\
+      &+ LPE\_FLW\_R * LPE\_FLW\_R * rot\_sq\\
+      &+ LPE\_FLW\_RR * LPE\_FLW\_RR * rotrate\_sq \\
+R_{flow}(1,1) &= R_{flow}(0,0) \\
+
 \end{align}</script>
       
     </div>
@@ -863,7 +945,7 @@ C&:
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sensors"><span class="nav-number">1.</span> <span class="nav-text">Sensors</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">input:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#states"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">states:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#measurements"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">measurements:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-time-extended-Kalman-filter"><span class="nav-number">2.</span> <span class="nav-text">Continuous-time extended Kalman filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Predict"><span class="nav-number">2.1.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correct"><span class="nav-number">2.2.</span> <span class="nav-text">Correct</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BaroCorrect"><span class="nav-number">2.2.1.</span> <span class="nav-text">BaroCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LidarCorrect"><span class="nav-number">2.2.2.</span> <span class="nav-text">LidarCorrect</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sensors"><span class="nav-number">1.</span> <span class="nav-text">Sensors</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">input:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#states"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">states:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#measurements"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">measurements:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-time-extended-Kalman-filter"><span class="nav-number">2.</span> <span class="nav-text">Continuous-time extended Kalman filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Predict"><span class="nav-number">2.1.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correct"><span class="nav-number">2.2.</span> <span class="nav-text">Correct</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BaroCorrect"><span class="nav-number">2.2.1.</span> <span class="nav-text">BaroCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LidarCorrect"><span class="nav-number">2.2.2.</span> <span class="nav-text">LidarCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FlowCorrect"><span class="nav-number">2.2.3.</span> <span class="nav-text">FlowCorrect</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
