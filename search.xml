@@ -28,7 +28,7 @@
   <entry>
     <title><![CDATA[硬件]]></title>
     <url>%2F2017%2F10%2F22%2F%E7%A1%AC%E4%BB%B6%2F</url>
-    <content type="text"><![CDATA[]]></content>
+    <content type="text"><![CDATA[处理器：STM32F427VI 九轴陀螺仪：MPU9250 气压计：MS5611 LDO：LP5907 FLASH:W25Q128 USB：CP2102 隔离保护：TXS0108 RGB Miscro SD FPC外置IMU接口 UART2,UART8,UART3,UART1 IIC SPI 4 * PWM DSM2, SBUS 之前是有考虑采用STM32F7的，但是价格有点太贵了，F4处理一般的飞控还是没有问题的，留了FPC接口，后面外接独立IMU进行减震。 原理图就不贴了。花了两个晚上把线布了，双层板 板子终于到了，先刚焊了几个元件。。 除了flash芯片没有焊接外其他都已经OK了]]></content>
       <categories>
         <category>quadcopter</category>
       </categories>
@@ -50,18 +50,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[位置控制-px4]]></title>
-    <url>%2F2017%2F10%2F12%2F%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6-px4%2F</url>
-    <content type="text"><![CDATA[主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件 未完待续！ 思路 todo 框架 todo 实现 todo]]></content>
-      <categories>
-        <category>quadcopter</category>
-      </categories>
-      <tags>
-        <tag>quadcopter</tag>
-        <tag>position control</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[高度控制]]></title>
     <url>%2F2017%2F10%2F12%2F%E9%AB%98%E5%BA%A6%E6%8E%A7%E5%88%B6%2F</url>
     <content type="text"><![CDATA[思路关于高度控制有两种不同的控制方式： 遥控器油门代表期望速度，回中代表期望速度为0，油门向上期望速度为正，油门向下期望速度为负。油门推进时，高度环只有速度环，位置环不起作用。油门回中，期望速度为0，此时飞行器悬停，位置环和速度环嵌套。 notice:油门回中时，期望速度即为0，但是实际速度并不会立即为0，由于速度环的作用，实际速度会逐渐减为0.如果在油门回中时也就是期望速度为0时，立即锁定当前高度，则飞行器会先上升一段高度，等到实际速度减为0，再下降悬停到锁定的高度，也就是油门回中时的高度。这种方式用户体验并不是很好，会给人一种很不稳的感觉。所以更好的应该是油门回中之后，飞行器应该悬停在实际飞行速度减为0的时候的高度而不是油门回中时的高度。 遥控器油门还是代表期望速度，但是把期望速度积分得出期望位置。油门不回中时，期望速度不为0，积分后期望位置在不停更新，油门推进时由位置环和速度环嵌套。油门回中时，期望速度为0，积分后的期望位置不发生改变，飞行器即悬停。 其实两种方式不同的地方就是第一种推油门的时候是控的目标速度，只有速度环，第二种推油门的时候就是控的目标位置，位置环和速度环嵌套。 想要获得比较好的效果，问题还是有很多的： 高度的PID控制器一般都有三环，位置环-&gt;速度环-&gt;加速度环，PID想要比较好的效果需要有几点注意的地方，比如系统的延时，数据的更新频率，以及数据的精度。 激光测距的更新频率比较慢，一般就20Hz~100Hz之间，要想比较好的效果的话这种控制频率就有点慢了，所以激光的数据还是要和加计的数据进行融合，融合了加计之后可以提高一些响应速度，但是肯定也会引入一定的噪声。所以在融合的时候要在响应速度和数据的波动上做一些处理，达到最好效果。 框架 todo:待补充 实现 todo:待完善 控制目标速度123456789101112131415161718192021222324252627float _dst_vel_z; // destination velocityfloat _est_vel_z; // estimate velocityfloat _dst_pos_z; // destination positionfloat _est_pos_z; // estimate positionbool _dst_pos_z_locked; // calc desired pos_z by velocity_zif ( fabsf( _dst_vel_z ) &lt; 5 ) &#123; // usr wanna stop if ( fabsf( _est_vel_z ) &lt; 15 ) &#123; // craft is slow enough if ( !_dst_pos_z_locked ) &#123; // pos_z not fixed _dst_pos_z = _est_pos_z; _dst_pos_z_locked = true; &#125; &#125;else&#123; // craft is fast。这里有一个风险：永远控不到较小的速度，位移环就一直不起作用 if ( !_dst_pos_z_locked ) &#123; // craft is fast, but not fixed now, ctrl speed until slow enough _dst_pos_z = _est_pos_z; &#125; //else&#123; // else craft is speed up by extern force( wind, sudden turn-around. etc... ) // desired position should still hold( but maybe changed when difference is too large ) //&#125; &#125;&#125;else&#123; // users wanna move _dst_pos_z = _est_pos_z; _dst_pos_z_locked = false;&#125;]]></content>
@@ -72,6 +60,18 @@
         <tag>quadcopter</tag>
         <tag>height control</tag>
         <tag>height</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[位置控制-px4]]></title>
+    <url>%2F2017%2F10%2F12%2F%E4%BD%8D%E7%BD%AE%E6%8E%A7%E5%88%B6-px4%2F</url>
+    <content type="text"><![CDATA[主要分析px4的位置控制方式，源码位于mc_pos_control.cpp文件 未完待续！ 思路 todo 框架 todo 实现 todo]]></content>
+      <categories>
+        <category>quadcopter</category>
+      </categories>
+      <tags>
+        <tag>quadcopter</tag>
+        <tag>position control</tag>
       </tags>
   </entry>
   <entry>
