@@ -726,7 +726,7 @@ R_{flow}(0,0) &= flow\_vxy\_stddev  * flow\_vxy\_stddev  \\
       &+ LPE\_FLW\_RR * LPE\_FLW\_RR * rotrate\_sq \\
 R_{flow}(1,1) &= R_{flow}(0,0) \\
 
-\end{align}</script><h5 id="GpsCorrect"><a href="#GpsCorrect" class="headerlink" title="GpsCorrect:"></a><em>GpsCorrect:</em></h5><p><em>formulas according to:</em> <a href="http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html" target="_blank" rel="external">http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html</a></p>
+\end{align}</script><h5 id="GpsCorrect"><a href="#GpsCorrect" class="headerlink" title="GpsCorrect"></a><em>GpsCorrect</em></h5><p><em>formulas according to:</em> <a href="http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html" target="_blank" rel="external">http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html</a></p>
 <p><em>get the orgin pos：</em></p>
 <script type="math/tex; mode=display">
 ref\_cos\_lat = cos (lat) \\
@@ -867,8 +867,8 @@ R =
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/22/高度切换/" rel="next" title="高度切换">
-                <i class="fa fa-chevron-left"></i> 高度切换
+              <a href="/2017/11/13/加计震动滤波/" rel="next" title="加计震动滤波">
+                <i class="fa fa-chevron-left"></i> 加计震动滤波
               </a>
             
           </div>
@@ -955,7 +955,7 @@ R =
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -1019,7 +1019,7 @@ R =
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sensors"><span class="nav-number">1.</span> <span class="nav-text">Sensors</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">input:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#states"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">states:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#measurements"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">measurements:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-time-extended-Kalman-filter"><span class="nav-number">2.</span> <span class="nav-text">Continuous-time extended Kalman filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Predict"><span class="nav-number">2.1.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correct"><span class="nav-number">2.2.</span> <span class="nav-text">Correct</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BaroCorrect"><span class="nav-number">2.2.1.</span> <span class="nav-text">BaroCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LidarCorrect"><span class="nav-number">2.2.2.</span> <span class="nav-text">LidarCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FlowCorrect"><span class="nav-number">2.2.3.</span> <span class="nav-text">FlowCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GpsCorrect"><span class="nav-number">2.2.4.</span> <span class="nav-text">GpsCorrect:</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sensors"><span class="nav-number">1.</span> <span class="nav-text">Sensors</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">input:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#states"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">states:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#measurements"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">measurements:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-time-extended-Kalman-filter"><span class="nav-number">2.</span> <span class="nav-text">Continuous-time extended Kalman filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Predict"><span class="nav-number">2.1.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correct"><span class="nav-number">2.2.</span> <span class="nav-text">Correct</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BaroCorrect"><span class="nav-number">2.2.1.</span> <span class="nav-text">BaroCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LidarCorrect"><span class="nav-number">2.2.2.</span> <span class="nav-text">LidarCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FlowCorrect"><span class="nav-number">2.2.3.</span> <span class="nav-text">FlowCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GpsCorrect"><span class="nav-number">2.2.4.</span> <span class="nav-text">GpsCorrect</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
