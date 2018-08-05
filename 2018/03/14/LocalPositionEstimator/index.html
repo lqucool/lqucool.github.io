@@ -726,7 +726,81 @@ R_{flow}(0,0) &= flow\_vxy\_stddev  * flow\_vxy\_stddev  \\
       &+ LPE\_FLW\_RR * LPE\_FLW\_RR * rotrate\_sq \\
 R_{flow}(1,1) &= R_{flow}(0,0) \\
 
-\end{align}</script>
+\end{align}</script><h5 id="GpsCorrect"><a href="#GpsCorrect" class="headerlink" title="GpsCorrect:"></a><em>GpsCorrect:</em></h5><p><em>formulas according to:</em> <a href="http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html" target="_blank" rel="external">http://mathworld.wolfram.com/AzimuthalEquidistantProjection.html</a></p>
+<p><em>get the orgin pos：</em></p>
+<script type="math/tex; mode=display">
+ref\_cos\_lat = cos (lat) \\
+ref\_cos\_lat = cos (lat)</script><script type="math/tex; mode=display">
+x\_rad = x / R_{earth} \\
+\quad \\
+y\_rad = y / R_{earth} \\
+\quad \\
+c = \sqrt{x\_rad^2 + y\_rad^2} \\
+\quad \\
+lat\_rad = asin(cos(c) * ref\_sin(lat) +\frac{x\_rad * sin(c) * ref\_cos(lat)}{c}) \\
+\quad \\
+lon\_rad = ref\_lon\_rad + atan(\frac{y\_rad * sin(c)} {c * ref\_cos\_lat * cos\_c - x\_rad * ref\_sin\_lat * sin(c)}) \\
+\quad \\
+gpsLatOrigin = lat\_rad * 180 / \pi \\
+\quad \\
+gpsLonOrigin = lon\_rad * 180 / \pi</script><script type="math/tex; mode=display">
+ref\_lat = gpsLatOrigin \qquad ref\_lat = gpsLatOrigin \\
+ref\_sin\_lat = sin(gpsLatOrigin) \qquad ref\_cos\_lat = cos(gpsLatOrigin)</script><script type="math/tex; mode=display">
+y_{global} = 
+    \left[
+    \begin{array}{cccc}
+       lat*1e^{-7} \\
+       lon*1e^{-7} \\
+       alt *1e^{-3} \\
+       vel\_n\_m\_s \\
+       vel\_e\_m\_s \\
+       vel\_d\_m\_s
+    \end{array}
+    \right] \\</script><script type="math/tex; mode=display">
+sin\_lat=sin(lat*1e^{-7} * \frac{\pi} {180} ) \\
+cos\_lat=cos(lat*1e^{-7} * \frac{\pi} {180} ) \\
+cos\_d\_lon = cos(lon\_rad - ref\_lon\_rad) \\
+arg = ref\_sin\_lat * sin\_lat + ref\_cos\_lat * lat * cos \_d\_lon  \\
+c = acos(arg) \\
+k = c / sin(c) \\
+px  = k * (ref\_cos_lat * sin\_lat - ref\_sin\_lat * cos\_lat * cos\_d\_lon) * R_{earth} \\
+py = k * cos\_lat * sin(lon\_rad - ref\_lon\_rad) * R_{earth} \\
+pz = alt - \_gpsAltOrigin</script><script type="math/tex; mode=display">
+    y = 
+        \left[
+    \begin{array}{cccc}
+       px \\
+       py \\
+       pz \\
+       vel\_n\_m\_s \\
+       vel\_e\_m\_s \\
+       vel\_d\_m\_s
+    \end{array}
+    \right]</script><script type="math/tex; mode=display">
+C = 
+        \left[
+        \begin{array}{cccc}
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+        0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+        0 &  0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+        0 &  0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0  \\
+        0 &  0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0  \\
+        0 &  0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0  \\
+        \end{array}
+        \right] \\
+\qquad \\
+\qquad \\
+R = 
+        \left[
+        \begin{array}{cccc}
+        1 & 0 & 0 & 0 & 0 & 0  \\
+        0 & 1 & 0 & 0 & 0 & 0   \\
+        0 &  0 & 3^2 & 0 & 0 & 0  \\
+        0 &  0 & 0 & 0.25^2 & 0 & 0  \\
+        0 &  0 & 0 & 0 & 0.25^2 & 0  \\
+        0 &  0 & 0 & 0 & 0 & 0.25^2  \\
+        \end{array}
+        \right] \\</script>
       
     </div>
     
@@ -945,7 +1019,7 @@ R_{flow}(1,1) &= R_{flow}(0,0) \\
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sensors"><span class="nav-number">1.</span> <span class="nav-text">Sensors</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">input:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#states"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">states:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#measurements"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">measurements:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-time-extended-Kalman-filter"><span class="nav-number">2.</span> <span class="nav-text">Continuous-time extended Kalman filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Predict"><span class="nav-number">2.1.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correct"><span class="nav-number">2.2.</span> <span class="nav-text">Correct</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BaroCorrect"><span class="nav-number">2.2.1.</span> <span class="nav-text">BaroCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LidarCorrect"><span class="nav-number">2.2.2.</span> <span class="nav-text">LidarCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FlowCorrect"><span class="nav-number">2.2.3.</span> <span class="nav-text">FlowCorrect</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sensors"><span class="nav-number">1.</span> <span class="nav-text">Sensors</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#input"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">input:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#states"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">states:</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#measurements"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">measurements:</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Continuous-time-extended-Kalman-filter"><span class="nav-number">2.</span> <span class="nav-text">Continuous-time extended Kalman filter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Predict"><span class="nav-number">2.1.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Correct"><span class="nav-number">2.2.</span> <span class="nav-text">Correct</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#BaroCorrect"><span class="nav-number">2.2.1.</span> <span class="nav-text">BaroCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LidarCorrect"><span class="nav-number">2.2.2.</span> <span class="nav-text">LidarCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FlowCorrect"><span class="nav-number">2.2.3.</span> <span class="nav-text">FlowCorrect</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GpsCorrect"><span class="nav-number">2.2.4.</span> <span class="nav-text">GpsCorrect:</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
