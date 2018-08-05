@@ -107,13 +107,13 @@
 
 
 
-<meta name="description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
+<meta name="description" content="Beaglebone blue 搭载Debian系统，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧。 Visual Studio 2017 可以进行linux嵌入式开发了，可以直接在PC上编译生成可">
 <meta name="keywords" content="beaglebone">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BeagleBone Blue 编译部署">
 <meta property="og:url" content="https://lqucool.github.io/2017/10/09/Beaglebone 编译部署/index.html">
 <meta property="og:site_name" content="Make the ideas fly">
-<meta property="og:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
+<meta property="og:description" content="Beaglebone blue 搭载Debian系统，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧。 Visual Studio 2017 可以进行linux嵌入式开发了，可以直接在PC上编译生成可">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
 <meta property="og:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%95%8C%E9%9D%A2.png">
@@ -122,7 +122,7 @@
 <meta property="og:updated_time" content="2017-10-09T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BeagleBone Blue 编译部署">
-<meta name="twitter:description" content="一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。  Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beag">
+<meta name="twitter:description" content="Beaglebone blue 搭载Debian系统，今天查了下资料大概了解了开发步骤。主要有以下几种方式：  PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧。 Visual Studio 2017 可以进行linux嵌入式开发了，可以直接在PC上编译生成可">
 <meta name="twitter:image" content="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png">
 
 
@@ -450,16 +450,15 @@
       
 
       
-        <p>一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。</p>
-<blockquote>
-<p>Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：</p>
+        <blockquote>
+<p>Beaglebone blue 搭载Debian系统，今天查了下资料大概了解了开发步骤。主要有以下几种方式：</p>
 <ol>
 <li>PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧。</li>
 <li>Visual Studio 2017 可以进行linux嵌入式开发了，可以直接在PC上编译生成可执行文件，然后直接在线debug，非常方便。但是我用Visual Studio的时候，一些linux头文件找不到，还有一些beaglebone的API头文件缺失，一直没有编译成功，可能是我方法有问题，这个后面有时间在解决。不过Hello World还是可以运行成功的。</li>
 <li>还有很多开发者是在linux上使用esplice或者Qt Creator再加上交叉编译工具进行开发的，也是可以直接运行部署到beaglebone上的，不过这种方法我并没有进行尝试。</li>
 </ol>
 </blockquote>
-<p>还是先记录下第一种方法怎么操作的吧：</p>
+<p>还是先记录下第一种方法怎么操作的：</p>
 <ol>
 <li>下载安装WinSCP<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%99%BB%E5%BD%95.png" alt="avatar"><br>2.填入Beaglebone的主机名，端口号，还有用户名和密码，点击登录即可。<br>登录之后的界面：<br><img src="http://owsesa4hj.bkt.clouddn.com/WinSCP%E7%95%8C%E9%9D%A2.png" alt="avatar"><br>左边是PC的文件目录，右边是Beaglebone的文件目录，如果要复制文件直接拖过去就行了，挺方便的。</li>
 </ol>
@@ -616,7 +615,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -627,7 +626,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -638,7 +637,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>

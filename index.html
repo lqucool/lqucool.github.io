@@ -1389,182 +1389,6 @@ Matlab设计IIR滤波器
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://lqucool.github.io/2017/10/22/关于工作/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Qu.L">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://owsesa4hj.bkt.clouddn.com/touxiang.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Make the ideas fly">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/22/关于工作/" itemprop="url">关于工作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-22T00:00:00+08:00">
-                2017-10-22
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Post modified&#58;</span>
-              
-              <time title="Post modified" itemprop="dateModified" datetime="2017-10-22T00:00:00+08:00">
-                2017-10-22
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/work/" itemprop="url" rel="index">
-                    <span itemprop="name">work</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-KF融合气压计和加计
-移植了px4的Matrix库，并添加了矩阵求逆运算，但是由于矩阵运算迭代太多次导致其运算效率并不是很高。
-malab生成IIR滤波器参数，对原始气压计进行了初步滤波。
-
-互补融合激光测距和加计采用互补滤波融合激光测距和加计，融合之后的数据做了定高，PID控制可以稳定在+-1c
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/22/关于工作/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-
-
-
-    <div>
-      
-    </div>
-
-
-
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://lqucool.github.io/2017/10/22/硬件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2015,11 +1839,10 @@ todo: 后面有时间在详细整理硬件电路的设计。
       
         
           
-          一直想找一款能够快速开发的，高性能的板子，挑来挑去只有beaglebone blue最为合适，虽然价格略贵。
+          
+Beaglebone blue 搭载Debian系统，今天查了下资料大概了解了开发步骤。主要有以下几种方式：
 
-Beaglebone blue 搭载Debian系统，之前完全没玩过嵌入式linux，所以上手还是需要一点时间，今天查了下资料大概了解了开发步骤。主要有以下几种方式：
-
-PC上使用VS C
+PC上使用VS Code或者Sublime 进行代码编辑，之后使用WinSCP部署到Beaglebone上，在Beaglebone上使用makefile进行编译。也是比较高效的一种方法吧
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -2121,7 +1944,7 @@ PC上使用VS C
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -2132,7 +1955,7 @@ PC上使用VS C
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -2143,7 +1966,7 @@ PC上使用VS C
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
